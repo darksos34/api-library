@@ -1,10 +1,10 @@
-package dev.jda.demoapilibary.controller;
+package dev.jda.apilibary.controller;
 
-import dev.jda.demoapilibary.config.ModelMapperConfiguration;
-import dev.jda.demoapilibary.hal.DemoRepresentationAssembler;
-import dev.jda.demoapilibary.entity.Demo;
-import dev.jda.demoapilibary.repository.DemoRepository;
-import dev.jda.demoapilibary.service.DemoService;
+import dev.jda.apilibary.config.ModelMapperConfiguration;
+import dev.jda.apilibary.hal.DemoRepresentationAssembler;
+import dev.jda.apilibary.entity.Demo;
+import dev.jda.apilibary.repository.DemoRepository;
+import dev.jda.apilibary.service.DemoService;
 import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;

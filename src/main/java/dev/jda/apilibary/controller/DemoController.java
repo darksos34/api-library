@@ -1,14 +1,17 @@
-package dev.jda.demoapilibary.controller;
+package dev.jda.apilibary.controller;
 
-import dev.jda.demoapilibary.hal.DemoRepresentationAssembler;
-import dev.jda.demoapilibary.entity.Demo;
-import dev.jda.demoapilibary.service.DemoService;
+import dev.jda.apilibary.hal.DemoRepresentationAssembler;
+import dev.jda.apilibary.entity.Demo;
+import dev.jda.apilibary.service.DemoService;
+
+
 import dev.jda.demomodellibary.DemoDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
+
 import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.RestController;
 
