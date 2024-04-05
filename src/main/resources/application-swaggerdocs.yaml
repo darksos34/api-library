@@ -1,0 +1,6 @@
+api:
+  info:
+    title: Demo Applicatie
+    version: '@project.version'
+    description: |
+     Hier komt de beschrijving van de demo applicatie.
