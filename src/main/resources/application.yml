@@ -1,0 +1,17 @@
+server:
+  error:
+    include-message: always
+    include-stacktrace: never
+spring:
+  profiles:
+    api:
+      version: v1
+    name: ${SPRING_APPLICATION_NAME}
+    error-uri: /error
+    include: swaggerdocs
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - application-database.yml
+springdoc:
+  default-produces-media-type: application/json
