@@ -1,4 +1,4 @@
-package dev.jda.demoapilibary.config;
+package dev.jda.apilibary.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

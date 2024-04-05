@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.jda</groupId>
-    <artifactId>demo-api-libary</artifactId>
+    <artifactId>api-libary</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo-api-libary</name>
+    <name>api-libary</name>
     <description>api-libary</description>
     <properties>
         <java.version>21</java.version>
@@ -29,13 +29,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.eclipse.edc</groupId>-->
-<!--            <artifactId>junit</artifactId>-->
-<!--            <version>0.5.0</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
@@ -120,8 +113,6 @@
             <artifactId>demo-model-libary</artifactId>
             <version>0.0.1</version>
         </dependency>
-
-
     </dependencies>
 
     <build>

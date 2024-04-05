@@ -1,7 +1,8 @@
-package dev.jda.demoapilibary.hal;
+package dev.jda.apilibary.hal;
 
-import dev.jda.demoapilibary.controller.DemoController;
-import dev.jda.demoapilibary.entity.Demo;
+import dev.jda.apilibary.controller.DemoController;
+import dev.jda.apilibary.entity.Demo;
+
 import dev.jda.demomodellibary.DemoDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -9,9 +10,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 @RequiredArgsConstructor
 public class DemoRepresentationAssembler implements RepresentationModelAssembler<Demo, DemoDTO> {

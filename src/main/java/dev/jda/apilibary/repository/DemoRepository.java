@@ -1,6 +1,6 @@
-package dev.jda.demoapilibary.repository;
+package dev.jda.apilibary.repository;
 
-import dev.jda.demoapilibary.entity.Demo;
+import dev.jda.apilibary.entity.Demo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

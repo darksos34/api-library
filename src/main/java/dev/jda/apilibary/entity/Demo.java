@@ -1,4 +1,4 @@
-package dev.jda.demoapilibary.entity;
+package dev.jda.apilibary.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

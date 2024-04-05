@@ -1,4 +1,4 @@
-package dev.jda.demoapilibary.mapper;
+package dev.jda.apilibary.mapper;
 
 import org.modelmapper.ModelMapper;
 

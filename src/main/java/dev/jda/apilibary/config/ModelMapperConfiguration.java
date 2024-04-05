@@ -1,6 +1,6 @@
-package dev.jda.demoapilibary.config;
+package dev.jda.apilibary.config;
 
-import dev.jda.demoapilibary.mapper.Mapper;
+import dev.jda.apilibary.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
