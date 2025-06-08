@@ -1,20 +1,25 @@
 package dev.jda.api.library.mapper;
 
 import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public abstract class BaseMapper {
+    protected final LocalDateTimeToString dateTimeToStringConverter = new LocalDateTimeToString(DateTimeFormatter.ISO_OFFSET_DATE_TIME, ZoneId.systemDefault().getId());
+    protected final StringToLocalDateTime offsetDateTimeStringToDateConverter = new StringToLocalDateTime(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-    protected final ModelMapper modelMapper = new ModelMapper();
+    protected final Converter<String, LocalDateTime> stringToLocalDateTime = ctx -> {
+        try {
+            return offsetDateTimeStringToDateConverter.apply(ctx.getSource().trim());
 
-    // Custom method to convert LocalDateTime to a formatted string
-    protected final String formatLocalDateTimeToString(LocalDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return dateTime.format(formatter);
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    };
+
+        protected final Converter<LocalDateTime, String> localDateTimeToString = ctx -> dateTimeToStringConverter.apply(ctx.getSource());
+
     }
-
-    protected final Converter<LocalDateTime, String> convertLocalToString = ctx -> formatLocalDateTimeToString(ctx.getSource());
-}

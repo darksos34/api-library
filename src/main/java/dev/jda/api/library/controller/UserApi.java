@@ -1,6 +1,6 @@
 package dev.jda.api.library.controller;
 
-import dev.jda.api.library.exception.GlobalExceptionHandler;
+import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.api.library.requestmapping.RequestPath;
 import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Tag(name = "User", description = "User applicatie Endpoints")
+@Tag(name = "User", description = "User application Endpoints")
 @RequestMapping(RequestPath.V1 + RequestPath.USER)
 public interface UserApi {
 
@@ -69,9 +69,7 @@ public interface UserApi {
     //@PreAuthorize("hasAuthority('admin:READ)")
     @Operation(summary = "Nieuwe user aanmaken.")
     @ResponseBody
-    UserDTO createUser(@Valid @RequestBody UserDTO userDTO) throws GlobalExceptionHandler.CodeExistsExceptionHandler;
-
-
+    UserDTO createUser(@Valid @RequestBody UserDTO userDTO) throws CodeExistsExceptionHandler;
 
     /**
      * @param uuid   Patch User and filter based on UUID to be updated.
@@ -95,9 +93,9 @@ public interface UserApi {
      */
     @PostMapping("/createProfile")
     @Operation(summary = "Nieuwe Profile aanmaken.")
-    @ResponseBody
     @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
-    ProfileDTO createProfile(@RequestParam(value = "uuid") String uuid, @Valid @RequestBody ProfileDTO profile);
+    @ResponseBody
+    UserDTO createProfile(@RequestParam(value = "uuid") String uuid, @Valid @RequestBody ProfileDTO profile);
 
     /**
      * Filter on UUID and delete the user.

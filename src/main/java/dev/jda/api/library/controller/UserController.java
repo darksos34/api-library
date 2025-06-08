@@ -2,8 +2,7 @@ package dev.jda.api.library.controller;
 
 import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.entity.User;
-import dev.jda.api.library.exception.GlobalExceptionHandler;
-import dev.jda.api.library.hal.ProfileRepresentationAssembler;
+import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.api.library.hal.UserRepresentationAssembler;
 import dev.jda.api.library.service.UserService;
 import dev.jda.model.library.dto.ProfileDTO;
@@ -23,7 +22,6 @@ public class UserController implements UserApi {
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final UserRepresentationAssembler userRepresentationAssembler;
-    private final ProfileRepresentationAssembler profileRepresentationAssembler;
     private final PagedResourcesAssembler<User> pagedResourcesAssembler;
 
     @Override
@@ -48,7 +46,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public UserDTO createUser( UserDTO userDTO) throws GlobalExceptionHandler.CodeExistsExceptionHandler{
+    public UserDTO createUser( UserDTO userDTO) throws CodeExistsExceptionHandler {
         User user = modelMapper.map(userDTO, User.class);
         return userRepresentationAssembler.toModel(userService.saveUser(user));
     }
@@ -60,9 +58,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ProfileDTO createProfile(String uuid, ProfileDTO profileDTO) {
+    public UserDTO createProfile(String uuid, ProfileDTO profileDTO) {
         Profile profile = modelMapper.map(profileDTO, Profile.class);
-        return profileRepresentationAssembler.toModel(userService.createProfile(uuid, profile));
+        return userRepresentationAssembler.toModel(userService.createProfile(uuid, profile));
     }
 
     @Override
