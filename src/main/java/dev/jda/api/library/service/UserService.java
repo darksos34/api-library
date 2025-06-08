@@ -7,6 +7,7 @@ import dev.jda.api.library.repository.ProfileRepository;
 import dev.jda.api.library.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,20 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private static final String USER_NOTFOUND = "User with code '%s' was not found";
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+
+    /**
+     * @param uuid the uuid of the profile to get
+     * @return  the profile with the given uuid
+     */
+    public User getUserByUuid(String uuid) {
+        return userRepository.findByUuid(uuid)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(uuid, USER_NOTFOUND)));
+    }
 
     /**
      * Get a user by its code from the database
@@ -28,7 +39,7 @@ public class UserService {
      */
     public User getUserByCode(String code) {
         return userRepository.findByCode(code)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOTFOUND)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(code, USER_NOTFOUND)));
     }
 
     /**
@@ -75,11 +86,18 @@ public class UserService {
      * @param profile  with the values to be created.
      * @return      ProfileDTO with the created values.
      */
-    public Profile createProfile(String uuid, Profile profile) {
-        User user = userRepository.findByUuid(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        profile.setUser(user);
-        return profileRepository.save(profile);
+    public User createProfile(String uuid, Profile profile) {
+        Optional<User> userOptional = userRepository.findByUuid(uuid);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            profile.setUser(user);
+        } else if(userRepository.existsByCode(uuid)) {
+            throw new EntityNotFoundException(String.format(uuid, USER_NOTFOUND));
+        }  Exception e = new Exception();
+        log.error("Error parse json {}", e.getMessage());
+
+        return profileRepository.save(profile).getUser();
     }
 
     /**
@@ -92,13 +110,4 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format(uuid, USER_NOTFOUND)));
         userRepository.delete(user);
     }
-    /**
-     * @param uuid the uuid of the profile to get
-     * @return  the profile with the given uuid
-     */
-    public User getUserByUuid(String uuid) {
-        return userRepository.findByUuid(uuid)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(uuid, USER_NOTFOUND)));
-    }
-
 }

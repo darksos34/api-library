@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -145,16 +146,20 @@ class UserServiceTest {
 
 
     @Test
-    void createProfileReturnsProfileWhenUserExists() {
+    void testCreateProfile() {
         User user = createUser();
-        Profile profile = new Profile();
+        Profile profile = createProfile();
 
         when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.of(user));
         when(profileRepository.save(profile)).thenReturn(profile);
 
-        Profile result = unitToTest.createProfile(USER_UUID, profile);
+        User result = unitToTest.createProfile(USER_UUID, profile);
 
-        assertEquals(profile, result);
+        assertNotNull(result);
+        assertEquals(user, result);
+        assertEquals(user.getProfiles().get(0), profile);
+        assertEquals(profile.getUser(), user);
+        assertEquals(profile.getUser().getUuid(), USER_UUID);
     }
 
     @Test
@@ -187,6 +192,13 @@ class UserServiceTest {
 
     private User createUser(){
         return User.builder()
+                .code("1234")
+                .name("henk")
+                .uuid(USER_UUID)
+                .build();
+    }
+    private Profile createProfile(){
+        return Profile.builder()
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)
