@@ -4,8 +4,8 @@ import dev.jda.api.library.controller.UserController;
 import dev.jda.api.library.entity.User;
 import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
-import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NullMarked;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -19,7 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 @RequiredArgsConstructor
-@NonNullApi
+@NullMarked
 public class UserRepresentationAssembler implements RepresentationModelAssembler<User, UserDTO> {
 
     private final ModelMapper modelMapper;

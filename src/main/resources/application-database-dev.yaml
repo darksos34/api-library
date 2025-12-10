@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  ##############################
+  ###### DATABASE SETTINGS #####
+  ##############################
+  datasource:
+    url: jdbc:postgresql://${SERVER_URI}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  #  sql:
+  #    init:
+  #      data-locations: classpath:data.sql
+  #      mode: always
+  #      platform: postgresql
+
+
+  ##############################
+  ######## JPA SETTINGS ########
+  ##############################
+  jpa:
+    #    show-sql: true
+    hibernate:
+      # <create | create-drop | update | validate | none>
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    open-in-view: false

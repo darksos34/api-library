@@ -1,6 +1,6 @@
 api:
   info:
-    title: Demo Applicatie
+    title: api-library
     version: '@project.version'
     description: |
-     Hier komt de beschrijving van de demo applicatie.
+      Here is the description of the api-library application.
