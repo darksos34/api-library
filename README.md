@@ -32,7 +32,7 @@ Spring Boot simplifies building RESTful APIs by providing a framework for handli
 
 Go to [Spring](https://start.spring.io) and create a new Spring Boot project.
 
-![01-start-spring-io](https://github.com/darksos34/api-library/blob/master/src/main/resources/images/sping.initializr.png
+![01-start-spring-io](https://github.com/darksos34/api-library/blob/master/src/main/resources/images/sping.initializr.png)
 
 Add additional dependencies:
 - Springdoc - OpenApi Swagger UI: A library that provides a user interface for viewing API documentation.
@@ -62,6 +62,12 @@ Add additional dependencies:
             <version>${springdoc.openapi.starter.webmvc.api}</version>
         </dependency>
 ````
+
+### Required Model Library dependency
+
+[Model-library](https://github.com/darksos34/model-library)
+To run your Application you will need to import this project with Maven.
+
 
 ### ModelMapper: A library that simplifies object mapping. 
 
