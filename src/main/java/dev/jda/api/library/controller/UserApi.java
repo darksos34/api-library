@@ -33,7 +33,7 @@ public interface UserApi {
      * @param code of the user to be displayed.
      * @return  UserDTO with the values of the user.
      */
-    @GetMapping("/{code}")
+    @GetMapping("/code/{code}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @Operation(summary = "User weergeven op basis van code.")
@@ -48,7 +48,7 @@ public interface UserApi {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @Operation(summary = "User weergeven op basis van uuid.")
-    UserDTO getUserByUuid(String uuid);
+    UserDTO getUserByUuid(@PathVariable String uuid);
 
     /**
      * @param pageable Paging parameters.
