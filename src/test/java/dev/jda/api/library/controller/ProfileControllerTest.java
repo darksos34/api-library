@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -44,24 +45,24 @@ class ProfileControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+
     @Test
-    void testPatchProfileByUuid() throws  Exception{
+    void testPatchProfileByUuid() throws Exception {
         when(unitToTest.updateProfileByUuid(anyString(), any())).thenReturn(createProfile());
 
         RequestBuilder request = MockMvcRequestBuilders
-                .patch("/v1/profile/patchProfile/{uuid}", createProfile().getUuid())
+                .patch("/v1/profile/patchProfile/")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(PROFILE_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
-
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", is("A1B2")))
                 .andExpect(jsonPath("$.name", is("profile")));
 
+        verify(unitToTest).updateProfileByUuid(anyString(), any());
     }
-
 
 
     @Test
@@ -76,8 +77,8 @@ class ProfileControllerTest {
 
     private Profile createProfile() {
         return Profile.builder()
-                .name("profile")
                 .code("A1B2")
+                .name("profile")
                 .build();
     }
 }
