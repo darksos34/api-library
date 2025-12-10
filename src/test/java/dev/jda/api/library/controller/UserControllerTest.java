@@ -15,10 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -42,16 +43,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 class UserControllerTest {
 
-    public static final String USER_JSON = "{\"code\":\"1234\", \"name\":\"henk\"}";
-    @MockBean
+    public static final String USER_JSON = "{\"uuid\":\"f3as5jj-8819-9952-b3ds-l0os8iwwejsa\", \"name\":\"henk\"}";
+    @MockitoBean
     private ModelMapper modelMapper;
 
     @Getter
     @Setter
-    @MockBean
+    @MockitoBean
     private UserRepository userRepository;
 
-    @MockBean
+    @MockitoBean
     private UserService userService;
 
     @Autowired
@@ -69,10 +70,12 @@ class UserControllerTest {
 //    }
 
     @Test
-    void testGetUserByCode_NotFound() throws Exception {
-        when(userService.getUserByCode(anyString())).thenThrow(new EntityNotFoundException("User met code '1' is niet gevonden"));
+    void testGetUserByUuid_NotFound() throws Exception {
+        when(userService.getUserByUuid(anyString()))
+                .thenThrow(new EntityNotFoundException("User with uuid '%s' was not found"));
 
-        mockMvc.perform(get("/v1/user/1").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/user/{uuid}", "missing-uuid")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
@@ -127,7 +130,6 @@ class UserControllerTest {
     private User createUser(){
         return User.builder()
                 .uuid("f3as5jj-8819-9952-b3ds-l0os8iwwejsa")
-                .code("1234")
                 .name("henk")
                 .build();
     }

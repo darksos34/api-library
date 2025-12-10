@@ -41,7 +41,7 @@ public class UserRepresentationAssembler implements RepresentationModelAssembler
     }
 
     private void addSelfLink(UserDTO userDTO) {
-        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByCode(userDTO.getCode())).withSelfRel();
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByUuid(userDTO.getUuid())).withSelfRel();
         userDTO.add(selfLink);
     }
 }

@@ -157,9 +157,9 @@ class UserServiceTest {
 
         assertNotNull(result);
         assertEquals(user, result);
-        assertEquals(user.getProfiles().get(0), profile);
+        assertEquals(user.getProfiles().getFirst(), profile);
         assertEquals(profile.getUser(), user);
-        assertEquals(profile.getUser().getUuid(), USER_UUID);
+        assertEquals(USER_UUID, profile.getUser().getUuid());
     }
 
     @Test
@@ -199,6 +199,7 @@ class UserServiceTest {
     }
     private Profile createProfile(){
         return Profile.builder()
+                .uuid("nots5jj-8819-9952-b3ds-l0os8iwwejsa")
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)
