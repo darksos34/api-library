@@ -87,7 +87,7 @@ public interface UserApi {
     @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @Operation(summary = "User weergeven op basis van code.")
+    @Operation(summary = "Display user based on code.")
     UserDTO getUserByCode(@PathVariable(value = "code")
                           @Parameter(example = "ABCD", description = "test") String code);
 
@@ -106,7 +106,7 @@ public interface UserApi {
 public interface UserApi {
 
     @GetMapping()
-    @Operation(summary = "Lijst weergeven met alle users als paging.")
+    @Operation(summary = "Display list of all users with paging.")
     @Parameter(name = "page", schema = @Schema(type = "integer", defaultValue = "0"), in = ParameterIn.QUERY)
     @Parameter(name = "size", schema = @Schema(type = "integer", defaultValue = "20"), in = ParameterIn.QUERY)
     PagedModel<?> getAllUsersPageable(@ParameterObject @Parameter(hidden = true) Pageable pageable);
@@ -124,7 +124,7 @@ public interface UserApi {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //@PreAuthorize("hasAuthority('admin:READ)")
-    @Operation(summary = "Nieuwe user aanmaken.")
+    @Operation(summary = "Create new user.")
     @ResponseBody
     UserDTO createUser(@Valid @RequestBody UserDTO userDTO);
 
