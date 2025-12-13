@@ -1,10 +1,12 @@
 package dev.jda.api.library.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jda.api.library.config.ModelMapperConfiguration;
 import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.hal.ProfileRepresentationAssembler;
 import dev.jda.api.library.repository.ProfileRepository;
 import dev.jda.api.library.service.ProfileService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 class ProfileControllerTest {
 
-    public static final String PROFILE_JSON = "{\"code\":\"A1B2\", \"name\":\"profile\"}";
+    public static final String PROFILE_JSON = "{\"uuid\":\"bc249d76-617a-4dfa-be47e7effeab8\", \"name\":\"profile\"}";
 
     @MockitoBean
     private ProfileRepository profileRepository;
@@ -45,25 +49,78 @@ class ProfileControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockitoBean
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
 
     @Test
-    void testPatchProfileByUuid() throws Exception {
-        when(unitToTest.updateProfileByUuid(anyString(), any())).thenReturn(createProfile());
+    void testGetProfileByUuid() throws Exception {
+        when(unitToTest.getProfileByUuid(anyString())).thenReturn(createProfile());
 
         RequestBuilder request = MockMvcRequestBuilders
-                .patch("/v1/profile/patchProfile/")
+                .get("/v1/profile/bc249d76-617a-4dfa-be47e7effeab8")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(PROFILE_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code", is("A1B2")))
+                .andExpect(jsonPath("$.uuid", is("bc249d76-617a-4dfa-be47e7effeab8")))
                 .andExpect(jsonPath("$.name", is("profile")));
 
-        verify(unitToTest).updateProfileByUuid(anyString(), any());
+        verify(unitToTest).getProfileByUuid(anyString());
     }
 
+    @Test
+    void createProfile_returnsCreated() throws Exception {
+        when(unitToTest.createProfile(any(Profile.class))).thenReturn(createProfile());
+
+        mockMvc.perform(post("/v1/profile")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(PROFILE_JSON))
+                .andExpect(status().isCreated());
+
+        verify(unitToTest, times(1)).createProfile(any(Profile.class));
+    }
+
+    @Test
+    void testPutProfileByUuid() throws Exception {
+        when(unitToTest.putProfileByUuid(anyString(), any())).thenReturn(createProfile());
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .put("/v1/profile/bc249d76-617a-4dfa-be47e7effeab8")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(PROFILE_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("profile")));
+
+        verify(unitToTest).putProfileByUuid(anyString(), any());
+    }
+
+    @Test
+    void testPatchProfileByUuid() throws Exception {
+        when(unitToTest.patchProfileByUuid(anyString(), any())).thenReturn(createProfile());
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .patch("/v1/profile/" + createProfile().getUuid())
+                .accept(MediaType.APPLICATION_JSON)
+                .content(PROFILE_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.uuid", is("bc249d76-617a-4dfa-be47e7effeab8")))
+                .andExpect(jsonPath("$.name", is("profile")));
+
+        verify(unitToTest).patchProfileByUuid(anyString(), any());
+    }
 
     @Test
     void testDeleteProfileByUuid() throws Exception {
@@ -77,7 +134,7 @@ class ProfileControllerTest {
 
     private Profile createProfile() {
         return Profile.builder()
-                .code("A1B2")
+                .uuid("bc249d76-617a-4dfa-be47e7effeab8")
                 .name("profile")
                 .build();
     }

@@ -2,7 +2,6 @@ package dev.jda.api.library.controller;
 
 import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.api.library.requestmapping.RequestPath;
-import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -83,19 +82,6 @@ public interface UserApi {
     @ResponseStatus(HttpStatus.OK)
     UserDTO patchUserByUuid(@RequestParam(value = "uuid") String uuid,
                               @RequestBody UserDTO userDTO);
-
-    /**
-     * Create Profile and filter based on UUID by User to be updated.
-     *
-     * @param uuid    the values to be created.
-     * @param profile with the values to be created.
-     * @return UserDTO with the created values.
-     */
-    @PostMapping("/createProfile")
-    @Operation(summary = "Nieuwe Profile aanmaken.")
-    @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
-    @ResponseBody
-    UserDTO createProfile(@RequestParam(value = "uuid") String uuid, @Valid @RequestBody ProfileDTO profile);
 
     /**
      * Filter on UUID and delete the user.

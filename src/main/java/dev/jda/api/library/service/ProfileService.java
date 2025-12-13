@@ -1,6 +1,5 @@
 package dev.jda.api.library.service;
 
-
 import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.repository.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -28,11 +28,35 @@ public class ProfileService {
     }
 
     /**
+     * @param profile create a new profile
+     * @return   the created profile
+     */
+    public Profile createProfile(Profile profile) {
+        if (profile.getUuid() == null || profile.getUuid().isBlank()) {
+            profile.setUuid(UUID.randomUUID().toString());
+        }
+        return profileRepository.save(profile);
+    }
+
+    /**
+     * @param uuid  the uuid of the profile to put
+     * @param profile  the profile to put
+     * @return    the put profile
+     */
+    public Profile putProfileByUuid(String uuid, Profile profile) {
+        Profile existingProfile = profileRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
+        existingProfile.setCode(profile.getCode());
+        existingProfile.setName(profile.getName());
+        existingProfile.setUuid(profile.getUuid());
+        return profileRepository.save(existingProfile);
+    }
+
+    /**
      * @param uuid the uuid of the profile to patch
      * @param profile  the profile to patch
      * @return      the patched profile
      */
-    public Profile updateProfileByUuid(String uuid, Profile profile) {
+    public Profile patchProfileByUuid(String uuid, Profile profile) {
         Profile existingProfile = profileRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
 
         Optional.ofNullable(profile.getCode()).ifPresent(existingProfile::setCode);
@@ -47,19 +71,6 @@ public class ProfileService {
         Profile profile = profileRepository.findByUuid(uuid)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
         profileRepository.delete(profile);
-    }
-
-    /**
-     * @param uuid  the uuid of the profile to put
-     * @param profile  the profile to put
-     * @return    the put profile
-     */
-    public Profile putProfileByUuid(String uuid, Profile profile) {
-        Profile existingProfile = profileRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
-        existingProfile.setCode(profile.getCode());
-        existingProfile.setName(profile.getName());
-        existingProfile.setUuid(profile.getUuid());
-        return profileRepository.save(existingProfile);
     }
 
 }

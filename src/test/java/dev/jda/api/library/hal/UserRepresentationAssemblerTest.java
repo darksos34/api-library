@@ -48,12 +48,12 @@ class UserRepresentationAssemblerTest {
     @Test
     void toModel_User_mapsAndAddsProfiles() {
         User createUser = User.builder()
-                .code("1234")
+                .code("ABCD")
                 .name("testUser")
                 .build();
         createUser.setProfiles(Collections.singletonList(new Profile()));
 
-        userDTO.setCode("1234");
+        userDTO.setCode("ABCD");
         when(modelMapper.map(any(User.class), eq(UserDTO.class))).thenReturn(userDTO);
         when(profileReprestoModel.toModel(any(Profile.class))).thenReturn(profileDTO);
 
@@ -61,7 +61,7 @@ class UserRepresentationAssemblerTest {
 
         verify(modelMapper).map(createUser, UserDTO.class);
         verify(profileReprestoModel).toModel(any(Profile.class));
-        assertEquals("1234", result.getCode());
+        assertEquals("ABCD", result.getCode());
         assertNotNull(result.getProfiles());
         assertEquals(1, result.getProfiles().size());
         assertEquals(Collections.singletonList(profileDTO), result.getProfiles());
