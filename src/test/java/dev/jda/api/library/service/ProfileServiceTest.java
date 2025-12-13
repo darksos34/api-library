@@ -21,12 +21,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 @Import({ModelMapperConfiguration.class})
 class ProfileServiceTest {
 
-    private static final String PROFILE_UUID =  "1234" ;
+    private static final String PROFILE_UUID =  "bc249d76-617a-4dfa-be47e7effeab8" ;
     @Mock
     private ProfileRepository profileRepository;
 
@@ -60,21 +59,48 @@ class ProfileServiceTest {
         assertThrows(EntityNotFoundException.class, () -> unitToTest.getProfileByUuid(PROFILE_UUID));
     }
 
+
     @Test
-    void testUpdateProfileByUuidSimple() {
+    void testCreateProfile() {
+        // Arrange: Set up any necessary data or mock behavior
+        when(profileRepository.save(any())).thenReturn(createProfile());
+
+        // Act: Call the method under test
+        Profile result = unitToTest.createProfile(createProfile());
+
+        // Assert: Check that the method behaved as expected
+        assertEquals(createProfile(), result);
+    }
+
+    @Test
+    void putProfileByUuid() {
         // Arrange: Set up any necessary data or mock behavior
         when(profileRepository.findByUuid(any())).thenReturn(Optional.of(createProfile()));
         when(profileRepository.save(any())).thenReturn(createProfile());
 
         // Act: Call the method under test
-        Profile result = unitToTest.updateProfileByUuid(PROFILE_UUID, createProfile());
+        Profile result = unitToTest.putProfileByUuid(PROFILE_UUID, createProfile());
 
         // Assert: Check that the method behaved as expected
         assertEquals(createProfile(), result);
     }
+
+    @Test
+    void testPatchProfileByUuidSimple() {
+        // Arrange: Set up any necessary data or mock behavior
+        when(profileRepository.findByUuid(any())).thenReturn(Optional.of(createProfile()));
+        when(profileRepository.save(any())).thenReturn(createProfile());
+
+        // Act: Call the method under test
+        Profile result = unitToTest.patchProfileByUuid(PROFILE_UUID, createProfile());
+
+        // Assert: Check that the method behaved as expected
+        assertEquals(createProfile(), result);
+    }
+
     @Test
     void testPatchProfileByUuidUserExpert() {
-        String uuid = "1234";
+        String uuid = "bc249d76-617a-4dfa-be47e7effeab8";
         Profile existingProfile = Profile.builder()
                 .uuid(uuid)
                 .name("John Doe")
@@ -91,7 +117,7 @@ class ProfileServiceTest {
 
         ArgumentCaptor<Profile> profileArgumentCaptor = ArgumentCaptor.forClass(Profile.class);
 
-        Profile result = unitToTest.updateProfileByUuid(uuid, updateProfile);
+        Profile result = unitToTest.patchProfileByUuid(uuid, updateProfile);
 
         verify(profileRepository).save(profileArgumentCaptor.capture());
         Profile capturedProfile = profileArgumentCaptor.getValue();
@@ -102,7 +128,6 @@ class ProfileServiceTest {
 
         assertEquals(capturedProfile, result);
     }
-
 
     @Test
     void testDeleteProfileByUuid() {
@@ -115,6 +140,7 @@ class ProfileServiceTest {
         // Assert: Check that the method behaved as expected
         verify(profileRepository).delete(createProfile());
     }
+
     @Test
     void testDeleteProfileByUuidNotFound() {
         // Arrange: Set up any necessary data or mock behavior
@@ -126,21 +152,20 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testUpdateProfileByUuidNotFound() {
-        // Arrange: Set up any necessary data or mock behavior
+    void testPatchProfileByUuidNotFound() {
         when(profileRepository.findByUuid(any())).thenReturn(Optional.empty());
 
-        // Act: Call the method under test
-        // Assert: Check that the method behaved as expected
-        assertThrows(EntityNotFoundException.class, () -> unitToTest.updateProfileByUuid(PROFILE_UUID, createProfile()));
+        // move createProfile() out of the lambda so the lambda has only one invocation
+        Profile profileToUpdate = createProfile();
+        assertThrows(EntityNotFoundException.class, () -> unitToTest.patchProfileByUuid(PROFILE_UUID, profileToUpdate));
     }
-
 
     private Profile createProfile() {
         return Profile.builder()
-                .uuid("1234")
+                .uuid("bc249d76-617a-4dfa-be47e7effeab8")
                 .code("ABCD")
                 .name("John Doe")
                 .build();
     }
+
 }

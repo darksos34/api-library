@@ -33,8 +33,8 @@ import static org.mockito.Mockito.when;
 @Import({ModelMapperConfiguration.class})
 class UserServiceTest {
 
-    public static final String USER_CODE = "1234";
-    public static final String USER_UUID = "nots5jj-8819-9952-b3ds-l0os8iwwejsa";
+    public static final String USER_CODE = "ABCD";
+    public static final String USER_UUID = "bc249d76-617a-4dfa-be47e7effeab8";
 
     @Mock
     protected UserRepository userRepository;
@@ -45,7 +45,7 @@ class UserServiceTest {
     private UserService unitToTest;
 
     @BeforeEach
-    public void beforeEachTest(){
+    void beforeEachTest(){
         this.unitToTest = new UserService(userRepository, profileRepository);
     }
 
@@ -102,8 +102,8 @@ class UserServiceTest {
 
         User existingUser = createUser();
         User newUser = User.builder()
-                .code("5678")
-                .name("piet")
+                .code("ABCD")
+                .name("henk")
                 .uuid(USER_UUID)
                 .build();
 
@@ -200,7 +200,7 @@ class UserServiceTest {
     }
     private Profile createProfile(){
         return Profile.builder()
-                .uuid("nots5jj-8819-9952-b3ds-l0os8iwwejsa")
+                .uuid("bc249d76-617a-4dfa-be47e7effeab8")
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)
