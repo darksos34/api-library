@@ -3,7 +3,6 @@ package dev.jda.api.library.service;
 import dev.jda.api.library.config.ModelMapperConfiguration;
 import dev.jda.api.library.entity.User;
 import dev.jda.api.library.exception.GlobalExceptionHandler;
-import dev.jda.api.library.repository.ProfileRepository;
 import dev.jda.api.library.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,14 +36,11 @@ class UserServiceTest {
     @Mock
     protected UserRepository userRepository;
 
-    @Mock
-    protected ProfileRepository profileRepository;
-
     private UserService unitToTest;
 
     @BeforeEach
     void beforeEachTest(){
-        this.unitToTest = new UserService(userRepository, profileRepository);
+        this.unitToTest = new UserService(userRepository);
     }
 
     @Test
