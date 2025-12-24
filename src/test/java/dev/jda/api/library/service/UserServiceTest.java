@@ -1,7 +1,6 @@
 package dev.jda.api.library.service;
 
 import dev.jda.api.library.config.ModelMapperConfiguration;
-import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.entity.User;
 import dev.jda.api.library.exception.GlobalExceptionHandler;
 import dev.jda.api.library.repository.ProfileRepository;
@@ -23,7 +22,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -57,6 +55,17 @@ class UserServiceTest {
     }
 
     @Test
+    void testGetUserByUuid() {
+        User user = createUser();
+
+        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.of(user));
+
+        User result = unitToTest.getUserByUuid(USER_UUID);
+
+        assertEquals(user, result);
+    }
+
+    @Test
     void testGetAllUsersPageable_HappyPath() {
         Pageable pageable = PageRequest.of(0, 5);
         Page<User> userPage = new PageImpl<>(Collections.nCopies(5, createUser()), pageable, 5);
@@ -73,7 +82,7 @@ class UserServiceTest {
         when(userRepository.existsByCode(user.getCode())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        User result = unitToTest.saveUser(user);
+        User result = unitToTest.createUser(user);
 
         assertEquals(user.getCode(), result.getCode());
         assertEquals(user.getName(), result.getName());
@@ -81,15 +90,16 @@ class UserServiceTest {
     }
 
     @Test
-    void saveUser_CodeExists() {
+    void createUser_CodeExists() {
         User user = createUser();
 
         when(userRepository.existsByCode(user.getCode())).thenReturn(true);
 
-        assertThrows(GlobalExceptionHandler.CodeExistsExceptionHandler.class, () -> unitToTest.saveUser(user));
+        assertThrows(GlobalExceptionHandler.CodeExistsExceptionHandler.class, () -> unitToTest.createUser(user));
+
     }
     @Test
-    void testSaveUserByUuid_EntityNotFound() {
+    void testCreateUserByUuid_EntityNotFound() {
         User newUser = createUser();
 
         when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
@@ -98,7 +108,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testSaveUserByUuid_HappyPath_WithArgumentCaptor() {
+    void testCreateUserByUuid_HappyPath_WithArgumentCaptor() {
 
         User existingUser = createUser();
         User newUser = User.builder()
@@ -125,8 +135,9 @@ class UserServiceTest {
         assertEquals(newUser.getName(), result.getName());
         assertEquals(newUser.getUuid(), result.getUuid());
     }
+
     @Test
-    void testSaveUserByUuid_NullFieldsInNewUser() {
+    void testCreateUserByUuid_NullFieldsInNewUser() {
         User existingUser = createUser();
         User newUser = User.builder()
                 .code(null)
@@ -146,41 +157,6 @@ class UserServiceTest {
 
 
     @Test
-    void testCreateProfile() {
-        User user = createUser();
-        Profile profile = createProfile();
-
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.of(user));
-        when(profileRepository.save(any(Profile.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        User result = unitToTest.createProfile(USER_UUID, profile);
-
-        assertNotNull(result);
-        assertEquals(user, result);
-        assertEquals(profile.getUser(), user);
-        assertEquals(USER_UUID, profile.getUser().getUuid());
-
-        verify(profileRepository).save(profile);
-    }
-
-    @Test
-    void createProfileThrowsExceptionWhenUserDoesNotExist() {
-        Profile profile = new Profile();
-
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
-
-        assertThrows(NullPointerException.class, () -> unitToTest.createProfile(USER_UUID, profile));
-    }
-
-    @Test
-    void testDeleteUserByUuid_EntityNotFound() {
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
-
-        assertThrows(EntityNotFoundException.class, () -> unitToTest.deleteUserByUuid(USER_UUID));
-    }
-
-
-    @Test
     void shouldDeleteUserWhenUuidExists() {
         User user = createUser();
 
@@ -193,14 +169,6 @@ class UserServiceTest {
 
     private User createUser(){
         return User.builder()
-                .code("1234")
-                .name("henk")
-                .uuid(USER_UUID)
-                .build();
-    }
-    private Profile createProfile(){
-        return Profile.builder()
-                .uuid("bc249d76-617a-4dfa-be47e7effeab8")
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)

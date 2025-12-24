@@ -63,7 +63,7 @@ public interface UserApi {
      * @param userDTO with the values to be created.
      * @return  UserDTO with the created values.
      */
-    @PostMapping("/createUser")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     //@PreAuthorize("hasAuthority('admin:READ)")
     @Operation(summary = "Nieuwe user aanmaken.")
@@ -75,7 +75,7 @@ public interface UserApi {
      * @param userDTO   UserDTO with the new values.
      * @return  UserDTO with the updated values.
      */
-    @PatchMapping(path = "/{id}")
+    @PatchMapping(path = "/{uuid}")
     @Operation(summary = "Bestaande user bijwerken.")
     @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
     //@PreAuthorize("hasAuthority('admin:READ)")
