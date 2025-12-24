@@ -32,7 +32,6 @@ public class UserController implements UserApi {
         return userRepresentationAssembler.toModel(userService.getUserByUuid(uuid));
     }
 
-
     @Override
     @SuppressWarnings (value="unchecked")
     public PagedModel<UserDTO> getAllUserrsPageable(Pageable pageable) {
@@ -46,7 +45,7 @@ public class UserController implements UserApi {
     @Override
     public UserDTO createUser( UserDTO userDTO) throws CodeExistsExceptionHandler {
         User user = modelMapper.map(userDTO, User.class);
-        return userRepresentationAssembler.toModel(userService.saveUser(user));
+        return userRepresentationAssembler.toModel(userService.createUser(user));
     }
 
     @Override

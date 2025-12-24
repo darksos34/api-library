@@ -76,7 +76,7 @@ class ProfileControllerTest {
     }
 
     @Test
-    void createProfile_returnsCreated() throws Exception {
+    void testCreateProfile() throws Exception {
         when(unitToTest.createProfile(any(Profile.class))).thenReturn(createProfile());
 
         mockMvc.perform(post("/v1/profile")
