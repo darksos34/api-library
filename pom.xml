@@ -5,23 +5,18 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>4.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.jda</groupId>
     <artifactId>api-library</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>api-library</name>
     <description>api-library</description>
     <properties>
-        <java.version>21</java.version>
-        <modelmapper.version>3.2.0</modelmapper.version>
-        <jpa.version>3.4.2</jpa.version>
-        <springdoc.openapi-ui>1.8.0</springdoc.openapi-ui>
-        <springdoc-openapi-starter-webflux-api>2.5.0</springdoc-openapi-starter-webflux-api>
-        <springdoc-openapi-starter-webmvc-ui>2.5.0</springdoc-openapi-starter-webmvc-ui>
-        <springdoc.openapi.starter.webmvc.api>2.5.0</springdoc.openapi.starter.webmvc.api>
-        <model.library.version>0.0.6</model.library.version>
+        <java.version>25</java.version>
+        <modelmapper.version>3.2.6</modelmapper.version>
+        <model.library.version>0.0.7</model.library.version>
     </properties>
 
     <dependencies>
@@ -29,10 +24,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test-autoconfigure</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -47,45 +55,25 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!-- https://springdoc.org/ -->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
-            <version>${springdoc-openapi-starter-webflux-api}</version>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc-openapi-starter-webmvc-ui}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <version>${springdoc.openapi.starter.webmvc.api}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.openapi-ui}</version>
+            <version>3.0.0</version>
         </dependency>
 
         <!--    https://modelmapper.org/getting-started/    -->
@@ -95,12 +83,12 @@
             <version>${modelmapper.version}</version>
         </dependency>
 
+        <!--Model Library imported-->
         <dependency>
             <groupId>dev.jda</groupId>
             <artifactId>model-library</artifactId>
             <version>${model.library.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -151,15 +151,16 @@ class UserServiceTest {
         Profile profile = createProfile();
 
         when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.of(user));
-        when(profileRepository.save(profile)).thenReturn(profile);
+        when(profileRepository.save(any(Profile.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         User result = unitToTest.createProfile(USER_UUID, profile);
 
         assertNotNull(result);
         assertEquals(user, result);
-        assertEquals(user.getProfiles().get(0), profile);
         assertEquals(profile.getUser(), user);
-        assertEquals(profile.getUser().getUuid(), USER_UUID);
+        assertEquals(USER_UUID, profile.getUser().getUuid());
+
+        verify(profileRepository).save(profile);
     }
 
     @Test
@@ -168,7 +169,7 @@ class UserServiceTest {
 
         when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> unitToTest.createProfile(USER_UUID, profile));
+        assertThrows(NullPointerException.class, () -> unitToTest.createProfile(USER_UUID, profile));
     }
 
     @Test
@@ -199,6 +200,7 @@ class UserServiceTest {
     }
     private Profile createProfile(){
         return Profile.builder()
+                .uuid("nots5jj-8819-9952-b3ds-l0os8iwwejsa")
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)

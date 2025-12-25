@@ -22,39 +22,38 @@ public interface ProfileApi {
 
     /**
      * @param uuid of the profile to be displayed.
-     * @return  ProfileDTO with the values of the profile.
+     * @return ProfileDTO with the values of the profile.
      */
     @GetMapping("/{uuid}")
     @Operation(summary = "Profile weergeven op basis van uuid.")
     ProfileDTO getProfileByUuid(@PathVariable(value = "uuid")
-                            @Parameter(example = "bc249d76-617a-4dfa-be47e7effeab8", description = "Filter PROFILE uuid") String uuid);
+                                @Parameter(example = "bc249d76-617a-4dfa-be47e7effeab8", description = "Filter PROFILE uuid") String uuid);
 
     /**
-     * @param uuid of the profile to be updated.
-     * @param profileDTO   with the values to be updated.
-     * @return      ProfileDTO with the updated values.
+     * @param uuid       of the profile to be updated.
+     * @param profileDTO with the values to be updated.
+     * @return ProfileDTO with the updated values.
      */
     @PutMapping(path = "/putProfile/{uuid}")
     @Operation(summary = "Bestaande profile bijwerken.")
-    @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
+    @Parameter(name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
     //@PreAuthorize("hasAuthority('admin:READ)")
     @ResponseStatus(HttpStatus.OK)
     ProfileDTO putProfileByUuid(@RequestParam(value = "uuid") String uuid,
-                            @RequestBody ProfileDTO profileDTO);
+                                @RequestBody ProfileDTO profileDTO);
 
     /**
-     * @param uuid of the profile to be updated.
-     * @param profileDTO   with the values to be updated.
-     * @return      ProfileDTO with the updated values.
+     * @param uuid       of the profile to be updated.
+     * @param profileDTO with the values to be updated.
+     * @return ProfileDTO with the updated values.
      */
-    @PatchMapping(path = "/patchProfile/{uuid}")
-    @Operation(summary = "Bestaande profile bijwerken.")
-    @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
     //@PreAuthorize("hasAuthority('admin:READ)")
+    @PatchMapping(path = "/{uuid}")
+    @Operation(summary = "Bestaande profile bijwerken.")
+    @Parameter(name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
     @ResponseStatus(HttpStatus.OK)
-    ProfileDTO patchProfileByUuid(@RequestParam(value = "uuid") String uuid,
-                            @RequestBody ProfileDTO profileDTO);
-
+    ProfileDTO patchProfileByUuid(@PathVariable("uuid") String uuid,
+                                  @RequestBody ProfileDTO profileDTO);
     /**
      * Filter on UUID and delete the profile.
      *
@@ -63,6 +62,6 @@ public interface ProfileApi {
     @DeleteMapping(path = "/{uuid}")
     @Operation(summary = "Profile verwijderen op basis van UUID.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteProfileByUuid(@PathVariable(value = "uuid")  @Parameter(example = "bc249d76-617a-4dfa-be47e7effeab8") String uuid);
+    void deleteProfileByUuid(@PathVariable(value = "uuid") @Parameter(example = "bc249d76-617a-4dfa-be47e7effeab8") String uuid);
 
 }

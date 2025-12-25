@@ -73,10 +73,10 @@ class ProfileServiceTest {
         assertEquals(createProfile(), result);
     }
     @Test
-    void testPatchProfileByUuidUserExpert(){
+    void testPatchProfileByUuidUserExpert() {
         String uuid = "1234";
         Profile existingProfile = Profile.builder()
-                .code(uuid)
+                .uuid(uuid)
                 .name("John Doe")
                 .code("ABCD")
                 .build();
@@ -85,8 +85,9 @@ class ProfileServiceTest {
                 .name("Jane Doe")
                 .code("EFGH")
                 .build();
+
         when(profileRepository.findByUuid(uuid)).thenReturn(Optional.of(existingProfile));
-        when(profileRepository.save(any((Profile.class)))).thenAnswer(inovaction -> inovaction.getArgument(0));
+        when(profileRepository.save(any(Profile.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ArgumentCaptor<Profile> profileArgumentCaptor = ArgumentCaptor.forClass(Profile.class);
 
@@ -97,9 +98,11 @@ class ProfileServiceTest {
 
         assertEquals(updateProfile.getCode(), capturedProfile.getCode());
         assertEquals(updateProfile.getName(), capturedProfile.getName());
-        assertEquals(updateProfile.getUuid(), capturedProfile.getUuid());
+        assertEquals(uuid, capturedProfile.getUuid());
 
+        assertEquals(capturedProfile, result);
     }
+
 
     @Test
     void testDeleteProfileByUuid() {

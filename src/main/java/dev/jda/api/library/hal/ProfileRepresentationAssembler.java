@@ -3,8 +3,9 @@ package dev.jda.api.library.hal;
 import dev.jda.api.library.controller.ProfileController;
 import dev.jda.api.library.entity.Profile;
 import dev.jda.model.library.dto.ProfileDTO;
-import io.micrometer.common.lang.NonNullApi;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -15,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 @RequiredArgsConstructor
-@NonNullApi
+@Nullable
 public class ProfileRepresentationAssembler implements RepresentationModelAssembler<Profile, ProfileDTO> {
 
     private final ModelMapper modelMapper;
