@@ -34,7 +34,7 @@ public class UserRepresentationAssembler implements RepresentationModelAssembler
     }
 
     public List<ProfileDTO> getProfilesAsModel(User entity) {
-        if(entity.getProfiles() == null) return Collections.emptyList();
+        if (entity.getProfiles() == null) return Collections.emptyList();
         return entity.getProfiles().stream()
                 .map(profileReprestoModel::toModel)
                 .toList();

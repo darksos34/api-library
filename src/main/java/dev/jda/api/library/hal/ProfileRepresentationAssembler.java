@@ -22,7 +22,7 @@ public class ProfileRepresentationAssembler implements RepresentationModelAssemb
 
     /**
      * @param profile the profile to convert
-     * @return  the converted profile
+     * @return the converted profile
      */
     @Override
     public ProfileDTO toModel(Profile profile) {

@@ -21,7 +21,7 @@ public class UserService {
 
     /**
      * @param uuid the uuid of the profile to get
-     * @return  the profile with the given uuid
+     * @return the profile with the given uuid
      */
     public User getUserByUuid(String uuid) {
         return userRepository.findByUuid(uuid)
@@ -30,9 +30,10 @@ public class UserService {
 
     /**
      * Get a user by its code from the database
+     *
      * @param code the code of the user
      *             to get from the database
-     * @return  the user with the given code
+     * @return the user with the given code
      */
     public User getUserByCode(String code) {
         return userRepository.findByCode(code)
@@ -41,9 +42,10 @@ public class UserService {
 
     /**
      * Get all userrs from the database
+     *
      * @param pageable the pageable object
      *                 containing the page number and size
-     * @return  a pageable list of userrs
+     * @return a pageable list of userrs
      */
     public Page<User> getAllUserrsPageable(Pageable pageable) {
         return userRepository.findAll(pageable);
@@ -51,8 +53,9 @@ public class UserService {
 
     /**
      * Save a user to the database
+     *
      * @param user Creat a user to save to the database
-     * @return  the saved user
+     * @return the saved user
      * @throws GlobalExceptionHandler.CodeExistsExceptionHandler if the code already exists
      */
     public User createUser(User user) throws GlobalExceptionHandler.CodeExistsExceptionHandler {
@@ -64,9 +67,10 @@ public class UserService {
 
     /**
      * Update a user by its given uuid to the database
+     *
      * @param uuid of the user to update
-     * @param user  the user to update
-     * @return  the updated user
+     * @param user the user to update
+     * @return the updated user
      * @throws EntityNotFoundException if the user is not found
      */
     public User patchUserByUuid(String uuid, User user) {
@@ -81,6 +85,7 @@ public class UserService {
 
     /**
      * Delete a user by its uuid
+     *
      * @param uuid of the user to delete
      * @throws EntityNotFoundException if the user is not found
      */
