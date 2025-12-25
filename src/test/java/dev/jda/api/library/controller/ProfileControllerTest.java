@@ -53,7 +53,7 @@ class ProfileControllerTest {
 
     @Test
     void testPatchProfileByUuid() throws Exception {
-        when(unitToTest.updateProfileByUuid(anyString(), any())).thenReturn(createProfile());
+        when(unitToTest .patchProfileByUuid(anyString(), any())).thenReturn(createProfile());
 
         RequestBuilder request = MockMvcRequestBuilders
                 .patch("/v1/profile/")
@@ -67,7 +67,7 @@ class ProfileControllerTest {
                 .andExpect(jsonPath("$.code", is("A1B2")))
                 .andExpect(jsonPath("$.name", is("profile")));
 
-        verify(unitToTest).updateProfileByUuid(anyString(), any());
+        verify(unitToTest).patchProfileByUuid(anyString(), any());
     }
 
 

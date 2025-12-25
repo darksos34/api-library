@@ -1,10 +1,8 @@
 package dev.jda.api.library.service;
 
 import dev.jda.api.library.config.ModelMapperConfiguration;
-import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.entity.User;
 import dev.jda.api.library.exception.GlobalExceptionHandler;
-import dev.jda.api.library.repository.ProfileRepository;
 import dev.jda.api.library.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +21,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -39,14 +36,11 @@ class UserServiceTest {
     @Mock
     protected UserRepository userRepository;
 
-    @Mock
-    protected ProfileRepository profileRepository;
-
     private UserService unitToTest;
 
     @BeforeEach
-    public void beforeEachTest(){
-        this.unitToTest = new UserService(userRepository, profileRepository);
+    void beforeEachTest(){
+        this.unitToTest = new UserService(userRepository);
     }
 
     @Test
@@ -67,13 +61,13 @@ class UserServiceTest {
     }
 
     @Test
-    void testSaveUser_HappyPath() throws GlobalExceptionHandler.CodeExistsExceptionHandler {
+    void testSaveUser_HappyPath() throws GlobalExceptionHandler.CodeExistsExceptionHandler{
         User user = createUser();
 
         when(userRepository.existsByCode(user.getCode())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        User result = unitToTest.saveUser(user);
+        User result = unitToTest.createUser(user);
 
         assertEquals(user.getCode(), result.getCode());
         assertEquals(user.getName(), result.getName());
@@ -86,7 +80,7 @@ class UserServiceTest {
 
         when(userRepository.existsByCode(user.getCode())).thenReturn(true);
 
-        assertThrows(GlobalExceptionHandler.CodeExistsExceptionHandler.class, () -> unitToTest.saveUser(user));
+        assertThrows(GlobalExceptionHandler.CodeExistsExceptionHandler.class, () -> unitToTest.createUser(user));
     }
     @Test
     void testSaveUserByUuid_EntityNotFound() {
@@ -144,42 +138,6 @@ class UserServiceTest {
         assertEquals(existingUser.getUuid(), result.getUuid());
     }
 
-
-    @Test
-    void testCreateProfile() {
-        User user = createUser();
-        Profile profile = createProfile();
-
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.of(user));
-        when(profileRepository.save(any(Profile.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        User result = unitToTest.createProfile(USER_UUID, profile);
-
-        assertNotNull(result);
-        assertEquals(user, result);
-        assertEquals(profile.getUser(), user);
-        assertEquals(USER_UUID, profile.getUser().getUuid());
-
-        verify(profileRepository).save(profile);
-    }
-
-    @Test
-    void createProfileThrowsExceptionWhenUserDoesNotExist() {
-        Profile profile = new Profile();
-
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
-
-        assertThrows(NullPointerException.class, () -> unitToTest.createProfile(USER_UUID, profile));
-    }
-
-    @Test
-    void testDeleteUserByUuid_EntityNotFound() {
-        when(userRepository.findByUuid(USER_UUID)).thenReturn(Optional.empty());
-
-        assertThrows(EntityNotFoundException.class, () -> unitToTest.deleteUserByUuid(USER_UUID));
-    }
-
-
     @Test
     void shouldDeleteUserWhenUuidExists() {
         User user = createUser();
@@ -193,14 +151,6 @@ class UserServiceTest {
 
     private User createUser(){
         return User.builder()
-                .code("1234")
-                .name("henk")
-                .uuid(USER_UUID)
-                .build();
-    }
-    private Profile createProfile(){
-        return Profile.builder()
-                .uuid("nots5jj-8819-9952-b3ds-l0os8iwwejsa")
                 .code("1234")
                 .name("henk")
                 .uuid(USER_UUID)
