@@ -58,7 +58,7 @@ public class UserService {
      * @return the saved user
      * @throws GlobalExceptionHandler.CodeExistsExceptionHandler if the code already exists
      */
-    public User createUser(User user) throws GlobalExceptionHandler.CodeExistsExceptionHandler {
+    public User createUser(User user) throws GlobalExceptionHandler.CodeExistsExceptionHandler  {
         if (userRepository.existsByCode(user.getCode())) {
             throw new GlobalExceptionHandler.CodeExistsExceptionHandler(user.getCode());
         }

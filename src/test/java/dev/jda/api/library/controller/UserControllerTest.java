@@ -46,7 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 class UserControllerTest {
 
-    public static final String USER_JSON = "{\"uuid\":\"f3as5jj-8819-9952-b3ds-l0os8iwwejsa\", \"name\":\"henk\"}";
     @MockitoBean
     private ModelMapper modelMapper;
 
@@ -60,17 +59,6 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-//    @Test
-//    void testGetUserByCode() throws Exception {
-//        when(userService.getUserByCode(anyString())).thenReturn(createUser());
-//
-//        mockMvc.perform(get("/v1/user/1").accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.code", is("1234")))
-//                .andExpect(jsonPath("$.name", is("henk")));
-//
-//    }
 
     @Test
     void testGetUserByUuid_NotFound() throws Exception {
@@ -94,7 +82,6 @@ class UserControllerTest {
     @Test
     @DisplayName("Should return 404 when non-existing UUID is provided")
     void shouldReturn404WhenNonExistingUuidIsProvided() throws Exception {
-        UserDTO userDTO = new UserDTO();
         User user = new User();
 
         when(modelMapper.map(any(UserDTO.class), any())).thenReturn(user);

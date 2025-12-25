@@ -67,7 +67,7 @@ class ProfileServiceTest {
         when(profileRepository.save(any())).thenReturn(createProfile());
 
         // Act: Call the method under test
-        Profile result = unitToTest.updateProfileByUuid(PROFILE_UUID, createProfile());
+        Profile result = unitToTest.patchProfileByUuid(PROFILE_UUID, createProfile());
 
         // Assert: Check that the method behaved as expected
         assertEquals(createProfile(), result);
@@ -91,7 +91,7 @@ class ProfileServiceTest {
 
         ArgumentCaptor<Profile> profileArgumentCaptor = ArgumentCaptor.forClass(Profile.class);
 
-        Profile result = unitToTest.updateProfileByUuid(uuid, updateProfile);
+        Profile result = unitToTest.patchProfileByUuid(uuid, updateProfile);
 
         verify(profileRepository).save(profileArgumentCaptor.capture());
         Profile capturedProfile = profileArgumentCaptor.getValue();
@@ -130,11 +130,12 @@ class ProfileServiceTest {
         // Arrange: Set up any necessary data or mock behavior
         when(profileRepository.findByUuid(any())).thenReturn(Optional.empty());
 
-        // Act: Call the method under test
-        // Assert: Check that the method behaved as expected
-        assertThrows(EntityNotFoundException.class, () -> unitToTest.updateProfileByUuid(PROFILE_UUID, createProfile()));
-    }
+        // prepare input outside the lambda to avoid incidental exceptions inside the assertThrows lambda
+        Profile input = createProfile();
 
+        // Act & Assert: Check that the method behaved as expected
+        assertThrows(EntityNotFoundException.class, () -> unitToTest.patchProfileByUuid(PROFILE_UUID, input));
+    }
 
     private Profile createProfile() {
         return Profile.builder()
