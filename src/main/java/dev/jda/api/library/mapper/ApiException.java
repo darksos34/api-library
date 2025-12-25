@@ -21,11 +21,12 @@ public class ApiException extends RuntimeException implements Serializable {
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    public ApiException(String message, String detail,  HttpStatus httpStatus) {
+    public ApiException(String message, String detail, HttpStatus httpStatus) {
         super(message);
         this.detail = detail;
         this.httpStatus = httpStatus;
     }
+
     public ApiException(String message) {
         super(message);
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

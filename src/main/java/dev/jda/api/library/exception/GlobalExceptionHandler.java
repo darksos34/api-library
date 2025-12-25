@@ -16,11 +16,13 @@ public class GlobalExceptionHandler {
             super(" with code " + code + " already exists.");
         }
     }
+
     @ExceptionHandler(CodeExistsExceptionHandler.class)
     public ResponseEntity<ErrorResponse> handleCustomCodeExistsException(CodeExistsExceptionHandler ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), 409, "/v1/users","Conflict", Timestamp.valueOf(LocalDateTime.now()));
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), 409, "/v1/users", "Conflict", Timestamp.valueOf(LocalDateTime.now()));
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
+
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A null value was encountered where it was not expected.");

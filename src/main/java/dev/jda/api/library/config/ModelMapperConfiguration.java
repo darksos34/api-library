@@ -17,7 +17,7 @@ public class ModelMapperConfiguration {
     private final List<Converter<?, ?>> converters;
 
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         mappers.forEach(mapper -> mapper.createMapper(modelMapper));
         converters.forEach(modelMapper::addConverter);

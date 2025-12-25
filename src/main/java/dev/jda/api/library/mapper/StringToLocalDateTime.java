@@ -20,14 +20,14 @@ public class StringToLocalDateTime implements Function<String, LocalDateTime> {
             try {
                 TemporalAccessor temporalAccessor = this.formatter.parseBest(s, LocalDateTime::from, LocalDateTime::from);
                 if (temporalAccessor instanceof LocalDateTime) {
-                    return (LocalDateTime)temporalAccessor;
+                    return (LocalDateTime) temporalAccessor;
                 } else {
-                    LocalDate date = (LocalDate)temporalAccessor;
+                    LocalDate date = (LocalDate) temporalAccessor;
                     LocalTime time = LocalTime.NOON;
                     return LocalDateTime.of(date, time);
                 }
             } catch (ClassCastException | DateTimeParseException e) {
-                    throw new DateMapperException(String.format("Error parsing date %s", e));
+                throw new DateMapperException(String.format("Error parsing date %s", e));
 
             }
         } else {

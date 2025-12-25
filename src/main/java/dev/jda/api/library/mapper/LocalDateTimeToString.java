@@ -16,6 +16,7 @@ public class LocalDateTimeToString implements Function<LocalDateTime, String> {
         this.formatter = formatter;
         this.timeOffset = timeOffset;
     }
+
     public LocalDateTimeToString(DateTimeFormatter formatter) {
         this.formatter = formatter;
         this.timeOffset = null;
