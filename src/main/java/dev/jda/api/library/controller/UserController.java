@@ -1,11 +1,9 @@
 package dev.jda.api.library.controller;
 
-import dev.jda.api.library.entity.Profile;
 import dev.jda.api.library.entity.User;
 import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.api.library.hal.UserRepresentationAssembler;
 import dev.jda.api.library.service.UserService;
-import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -34,33 +32,26 @@ public class UserController implements UserApi {
         return userRepresentationAssembler.toModel(userService.getUserByUuid(uuid));
     }
 
-
     @Override
-    @SuppressWarnings (value="unchecked")
+    @SuppressWarnings(value = "unchecked")
     public PagedModel<UserDTO> getAllUserrsPageable(Pageable pageable) {
-        Page<User> userPage =  userService.getAllUserrsPageable(pageable);
-        if(!userPage.isEmpty()) {
+        Page<User> userPage = userService.getAllUserrsPageable(pageable);
+        if (!userPage.isEmpty()) {
             return (PagedModel<UserDTO>) pagedResourcesAssembler.toEmptyModel(userPage, UserDTO.class);
         }
         return pagedResourcesAssembler.toModel(userPage, userRepresentationAssembler);
     }
 
     @Override
-    public UserDTO createUser( UserDTO userDTO) throws CodeExistsExceptionHandler {
+    public UserDTO createUser(UserDTO userDTO) throws CodeExistsExceptionHandler {
         User user = modelMapper.map(userDTO, User.class);
-        return userRepresentationAssembler.toModel(userService.saveUser(user));
+        return userRepresentationAssembler.toModel(userService.createUser(user));
     }
 
     @Override
     public UserDTO patchUserByUuid(String uuid, UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         return userRepresentationAssembler.toModel(userService.patchUserByUuid(uuid, user));
-    }
-
-    @Override
-    public UserDTO createProfile(String uuid, ProfileDTO profileDTO) {
-        Profile profile = modelMapper.map(profileDTO, Profile.class);
-        return userRepresentationAssembler.toModel(userService.createProfile(uuid, profile));
     }
 
     @Override

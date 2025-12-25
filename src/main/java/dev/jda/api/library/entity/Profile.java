@@ -47,7 +47,7 @@ public class Profile {
     private List<User> users;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         this.uuid = UUID.randomUUID().toString();
     }
 

@@ -5,7 +5,7 @@ public class RequestPath {
     public static final String USER = "/user";
     public static final String PROFILE = "/profile";
 
-    private RequestPath(){
+    private RequestPath() {
 
     }
 }

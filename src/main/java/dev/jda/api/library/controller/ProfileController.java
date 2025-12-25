@@ -22,6 +22,12 @@ public class ProfileController implements ProfileApi {
     }
 
     @Override
+    public ProfileDTO createProfile(ProfileDTO profileDTO) {
+        Profile profile = modelMapper.map(profileDTO, Profile.class);
+        return profileRepresentationAssembler.toModel(profileService.createProfile(profile));
+    }
+
+    @Override
     public ProfileDTO putProfileByUuid(String uuid, ProfileDTO profileDTO) {
         Profile profile = modelMapper.map(profileDTO, Profile.class);
         return profileRepresentationAssembler.toModel(profileService.putProfileByUuid(uuid, profile));
@@ -30,7 +36,7 @@ public class ProfileController implements ProfileApi {
     @Override
     public ProfileDTO patchProfileByUuid(String uuid, ProfileDTO profileDTO) {
         Profile profile = modelMapper.map(profileDTO, Profile.class);
-        return profileRepresentationAssembler.toModel(profileService.updateProfileByUuid(uuid, profile));
+        return profileRepresentationAssembler.toModel(profileService.patchProfileByUuid(uuid, profile));
     }
 
     @Override

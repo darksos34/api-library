@@ -2,7 +2,6 @@ package dev.jda.api.library.controller;
 
 import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.api.library.requestmapping.RequestPath;
-import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +23,7 @@ public interface UserApi {
 
     /**
      * @param code of the user to be displayed.
-     * @return  UserDTO with the values of the user.
+     * @return UserDTO with the values of the user.
      */
     @GetMapping("/code/{code}")
     @ResponseStatus(HttpStatus.OK)
@@ -35,7 +34,7 @@ public interface UserApi {
 
     /**
      * @param uuid of the user to be displayed.
-     * @return  UserDTO with the values of the user.
+     * @return UserDTO with the values of the user.
      */
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
@@ -45,7 +44,7 @@ public interface UserApi {
 
     /**
      * @param pageable Paging parameters.
-     * @return  Pageable list with all users.
+     * @return Pageable list with all users.
      */
     @GetMapping()
     @Operation(summary = "Lijst weergeven met alle users als paging.")
@@ -55,9 +54,9 @@ public interface UserApi {
 
     /**
      * @param userDTO with the values to be created.
-     * @return  UserDTO with the created values.
+     * @return UserDTO with the created values.
      */
-    @PostMapping("/createUser")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     //@PreAuthorize("hasAuthority('admin:READ)")
     @Operation(summary = "Nieuwe user aanmaken.")
@@ -65,33 +64,21 @@ public interface UserApi {
     UserDTO createUser(@Valid @RequestBody UserDTO userDTO) throws CodeExistsExceptionHandler;
 
     /**
-     * @param uuid   Patch User and filter based on UUID to be updated.
-     * @param userDTO   UserDTO with the new values.
-     * @return  UserDTO with the updated values.
+     * @param uuid    Patch User and filter based on UUID to be updated.
+     * @param userDTO UserDTO with the new values.
+     * @return UserDTO with the updated values.
      */
-    @PatchMapping(path = "/{id}")
+    @PatchMapping(path = "/{uuid}")
     @Operation(summary = "Bestaande user bijwerken.")
-    @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
+    @Parameter(name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
     //@PreAuthorize("hasAuthority('admin:READ)")
     @ResponseStatus(HttpStatus.OK)
     UserDTO patchUserByUuid(@RequestParam(value = "uuid") String uuid,
-                              @RequestBody UserDTO userDTO);
-
-    /**
-     * Create Profile and filter based on UUID by User to be updated.
-     *
-     * @param uuid    the values to be created.
-     * @param profile with the values to be created.
-     * @return UserDTO with the created values.
-     */
-    @PostMapping("/createProfile")
-    @Operation(summary = "Nieuwe Profile aanmaken.")
-    @Parameter( name = "uuid", example = "bc249d76-617a-4dfa-be47e7effeab8")
-    @ResponseBody
-    UserDTO createProfile(@RequestParam(value = "uuid") String uuid, @Valid @RequestBody ProfileDTO profile);
+                            @RequestBody UserDTO userDTO);
 
     /**
      * Filter on UUID and delete the user.
+     *
      * @param uuid of the user to be deleted.
      */
     @DeleteMapping(path = "/{uuid}")
