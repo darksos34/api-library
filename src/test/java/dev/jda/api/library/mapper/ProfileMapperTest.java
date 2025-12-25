@@ -1,4 +1,3 @@
-// java
 package dev.jda.api.library.mapper;
 
 import dev.jda.api.library.entity.Profile;

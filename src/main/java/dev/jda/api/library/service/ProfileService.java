@@ -20,7 +20,7 @@ public class ProfileService {
 
     /**
      * @param uuid the uuid of the profile to get
-     * @return  the profile with the given uuid
+     * @return the profile with the given uuid
      */
     public Profile getProfileByUuid(String uuid) {
         return profileRepository.findByUuid(uuid)
@@ -29,7 +29,7 @@ public class ProfileService {
 
     /**
      * @param profile create a new profile
-     * @return   the created profile
+     * @return the created profile
      */
     public Profile createProfile(Profile profile) {
         if (profile.getUuid() == null || profile.getUuid().isBlank()) {
@@ -39,9 +39,9 @@ public class ProfileService {
     }
 
     /**
-     * @param uuid  the uuid of the profile to put
-     * @param profile  the profile to put
-     * @return    the put profile
+     * @param uuid    the uuid of the profile to put
+     * @param profile the profile to put
+     * @return the put profile
      */
     public Profile putProfileByUuid(String uuid, Profile profile) {
         Profile existingProfile = profileRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
@@ -52,9 +52,9 @@ public class ProfileService {
     }
 
     /**
-     * @param uuid the uuid of the profile to patch
-     * @param profile  the profile to patch
-     * @return      the patched profile
+     * @param uuid    the uuid of the profile to patch
+     * @param profile the profile to patch
+     * @return the patched profile
      */
     public Profile patchProfileByUuid(String uuid, Profile profile) {
         Profile existingProfile = profileRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException(String.format(uuid, PROFILE_NOTFOUND)));
@@ -64,6 +64,7 @@ public class ProfileService {
 
         return profileRepository.save(existingProfile);
     }
+
     /**
      * @param uuid the uuid of the profile to delete
      */

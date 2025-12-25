@@ -37,7 +37,7 @@ public class User {
     private String code;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         this.uuid = UUID.randomUUID().toString();
 
     }

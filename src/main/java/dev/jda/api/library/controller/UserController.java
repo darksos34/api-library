@@ -33,17 +33,17 @@ public class UserController implements UserApi {
     }
 
     @Override
-    @SuppressWarnings (value="unchecked")
+    @SuppressWarnings(value = "unchecked")
     public PagedModel<UserDTO> getAllUserrsPageable(Pageable pageable) {
-        Page<User> userPage =  userService.getAllUserrsPageable(pageable);
-        if(!userPage.isEmpty()) {
+        Page<User> userPage = userService.getAllUserrsPageable(pageable);
+        if (!userPage.isEmpty()) {
             return (PagedModel<UserDTO>) pagedResourcesAssembler.toEmptyModel(userPage, UserDTO.class);
         }
         return pagedResourcesAssembler.toModel(userPage, userRepresentationAssembler);
     }
 
     @Override
-    public UserDTO createUser( UserDTO userDTO) throws CodeExistsExceptionHandler {
+    public UserDTO createUser(UserDTO userDTO) throws CodeExistsExceptionHandler {
         User user = modelMapper.map(userDTO, User.class);
         return userRepresentationAssembler.toModel(userService.createUser(user));
     }

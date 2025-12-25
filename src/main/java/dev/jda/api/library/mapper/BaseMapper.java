@@ -20,6 +20,6 @@ public abstract class BaseMapper {
         }
     };
 
-        protected final Converter<LocalDateTime, String> localDateTimeToString = ctx -> dateTimeToStringConverter.apply(ctx.getSource());
+    protected final Converter<LocalDateTime, String> localDateTimeToString = ctx -> dateTimeToStringConverter.apply(ctx.getSource());
 
-    }
+}

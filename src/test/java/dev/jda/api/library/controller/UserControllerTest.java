@@ -268,14 +268,14 @@ class UserControllerTest {
 
         doThrow(new EntityNotFoundException()).when(unitToTest).deleteUserByUuid(createUser().getUuid());
 
-        mockMvc.perform(delete("/v1/user/" +  createUser().getUuid())
+        mockMvc.perform(delete("/v1/user/" + createUser().getUuid())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
         verify(unitToTest, times(1)).deleteUserByUuid(createUser().getUuid());
     }
 
-    private User createUser(){
+    private User createUser() {
         return User.builder()
                 .uuid("f3as5jj-8819-9952-b3ds-l0os8iwwejsa")
                 .code("ABCD")

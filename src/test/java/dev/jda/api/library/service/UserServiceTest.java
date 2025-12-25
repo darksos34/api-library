@@ -39,12 +39,12 @@ class UserServiceTest {
     private UserService unitToTest;
 
     @BeforeEach
-    void beforeEachTest(){
+    void beforeEachTest() {
         this.unitToTest = new UserService(userRepository);
     }
 
     @Test
-    void testGetUserInfo(){
+    void testGetUserInfo() {
         when(userRepository.findByCode(any())).thenReturn(Optional.of(createUser()));
         User result = unitToTest.getUserByCode(USER_CODE);
         assertEquals(createUser(), result);
@@ -94,6 +94,7 @@ class UserServiceTest {
         assertThrows(GlobalExceptionHandler.CodeExistsExceptionHandler.class, () -> unitToTest.createUser(user));
 
     }
+
     @Test
     void testCreateUserByUuid_EntityNotFound() {
         User newUser = createUser();
@@ -163,7 +164,7 @@ class UserServiceTest {
         verify(userRepository).delete(user);
     }
 
-    private User createUser(){
+    private User createUser() {
         return User.builder()
                 .code("1234")
                 .name("henk")
