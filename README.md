@@ -3,8 +3,8 @@
 
 
 <b>Author:</b> <a href="https://github.com/darksos34" target="_blank">Jordy Hamwijk</a><br>
-<b>Created:</b> 2024-04-05<br>
-<b>Last updated:</b> 2024-05-17</br>
+<b>Created:</b> 04-05-2025<br>
+<b>Last updated:</b> 25-12-2025<br>
 
 [![](https://img.shields.io/badge/Spring%20Boot-8A2BE2)]() [![](https://img.shields.io/badge/release-Apr%2004,%202024-blue)]() [![](https://img.shields.io/badge/version-3.2.4-blue)]()
 
@@ -63,6 +63,12 @@ Add additional dependencies:
         </dependency>
 ````
 
+### Required Model Library dependency
+
+[Model-library](https://github.com/darksos34/model-library)
+To run your Application you will need to import this project with Maven.
+
+
 ### ModelMapper: A library that simplifies object mapping. 
 
 ```` xml
@@ -87,7 +93,7 @@ public interface UserApi {
     @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @Operation(summary = "User weergeven op basis van code.")
+    @Operation(summary = "Display user based on code.")
     UserDTO getUserByCode(@PathVariable(value = "code")
                           @Parameter(example = "ABCD", description = "test") String code);
 
@@ -106,7 +112,7 @@ public interface UserApi {
 public interface UserApi {
 
     @GetMapping()
-    @Operation(summary = "Lijst weergeven met alle users als paging.")
+    @Operation(summary = "Display list of all users with paging.")
     @Parameter(name = "page", schema = @Schema(type = "integer", defaultValue = "0"), in = ParameterIn.QUERY)
     @Parameter(name = "size", schema = @Schema(type = "integer", defaultValue = "20"), in = ParameterIn.QUERY)
     PagedModel<?> getAllUsersPageable(@ParameterObject @Parameter(hidden = true) Pageable pageable);
@@ -124,7 +130,7 @@ public interface UserApi {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //@PreAuthorize("hasAuthority('admin:READ)")
-    @Operation(summary = "Nieuwe user aanmaken.")
+    @Operation(summary = "Create new user.")
     @ResponseBody
     UserDTO createUser(@Valid @RequestBody UserDTO userDTO);
 

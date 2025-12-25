@@ -4,26 +4,19 @@ import dev.jda.api.library.exception.GlobalExceptionHandler.CodeExistsExceptionH
 import dev.jda.api.library.requestmapping.RequestPath;
 import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
+
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springdoc.api.annotations.ParameterObject;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User", description = "User application Endpoints")
 @RequestMapping(RequestPath.V1 + RequestPath.USER)
@@ -33,7 +26,7 @@ public interface UserApi {
      * @param code of the user to be displayed.
      * @return  UserDTO with the values of the user.
      */
-    @GetMapping("/{code}")
+    @GetMapping("/code/{code}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @Operation(summary = "User weergeven op basis van code.")
@@ -48,7 +41,7 @@ public interface UserApi {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @Operation(summary = "User weergeven op basis van uuid.")
-    UserDTO getUserByUuid(String uuid);
+    UserDTO getUserByUuid(@PathVariable String uuid);
 
     /**
      * @param pageable Paging parameters.

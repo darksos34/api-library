@@ -4,8 +4,9 @@ import dev.jda.api.library.controller.UserController;
 import dev.jda.api.library.entity.User;
 import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
-import io.micrometer.common.lang.NonNullApi;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -19,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 @RequiredArgsConstructor
-@NonNullApi
+@Nullable
 public class UserRepresentationAssembler implements RepresentationModelAssembler<User, UserDTO> {
 
     private final ModelMapper modelMapper;
@@ -41,7 +42,7 @@ public class UserRepresentationAssembler implements RepresentationModelAssembler
     }
 
     private void addSelfLink(UserDTO userDTO) {
-        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByCode(userDTO.getCode())).withSelfRel();
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByUuid(userDTO.getUuid())).withSelfRel();
         userDTO.add(selfLink);
     }
 }
