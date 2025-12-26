@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SwaggerRedirectController {
-    @GetMapping("/swagger-ui")
+
+    @GetMapping("/")
     public String redirectToSwagger() {
-        return "redirect:/swagger-ui/index.html";
+        return "redirect:/api/v1/swagger-ui/index.html";
     }
 }

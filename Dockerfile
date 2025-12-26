@@ -1,5 +1,5 @@
 # dockerfile
-FROM maven:3.9.8-eclipse-temurin-21 AS build
+FROM maven:3.9.8-eclipse-temurin-25 AS build
 
 WORKDIR /api-library
 
@@ -8,7 +8,7 @@ COPY src ./src
 
 RUN mvn -B -DskipTests package
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /api-library
 

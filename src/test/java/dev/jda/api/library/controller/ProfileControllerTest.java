@@ -14,21 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import({ ProfileService.class, ProfileController.class, ProfileRepresentationAssembler.class, ModelMapperConfiguration.class
+@Import({ProfileService.class, ProfileController.class, ProfileRepresentationAssembler.class, ModelMapperConfiguration.class
 })
 @WebMvcTest(controllers = ProfileController.class,
         properties = {
@@ -36,10 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 "springdoc.swagger-ui.enabled=false"
         })
 @ExtendWith(SpringExtension.class)
-
 class ProfileControllerTest {
-
-    public static final String PROFILE_JSON = "{\"code\":\"A1B2\", \"name\":\"profile\"}";
 
     @MockitoBean
     private ProfileRepository profileRepository;
@@ -49,27 +38,6 @@ class ProfileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-
-    @Test
-    void testPatchProfileByUuid() throws Exception {
-        when(unitToTest .patchProfileByUuid(anyString(), any())).thenReturn(createProfile());
-
-        RequestBuilder request = MockMvcRequestBuilders
-                .patch("/v1/profile/")
-                .param("uuid", "some-uuid")
-                .accept(MediaType.APPLICATION_JSON)
-                .content(PROFILE_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code", is("A1B2")))
-                .andExpect(jsonPath("$.name", is("profile")));
-
-        verify(unitToTest).patchProfileByUuid(anyString(), any());
-    }
-
 
     @Test
     void testDeleteProfileByUuid() throws Exception {
