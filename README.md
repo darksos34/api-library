@@ -3,10 +3,10 @@
 
 
 <b>Author:</b> <a href="https://github.com/darksos34" target="_blank">Jordy Hamwijk</a><br>
-<b>Created:</b> 04-05-2025<br>
-<b>Last updated:</b> 25-12-2025<br>
+<b>Created:</b> 2025-04-05<br>
+<b>Last updated:</b> 2025-12-25<br>
 
-[![](https://img.shields.io/badge/Spring%20Boot-8A2BE2)]() [![](https://img.shields.io/badge/release-Apr%2004,%202024-blue)]() [![](https://img.shields.io/badge/version-3.2.4-blue)]()
+[![](https://img.shields.io/badge/Spring%20Boot-8A2BE2)]() [![](https://img.shields.io/badge/release-Dec%2018,%202025-blue)]() [![](https://img.shields.io/badge/version-4.0.1-blue)]()
 
 ## 1. What is a CRUD REST API?
 A CRUD REST API allows clients to perform basic operations on resources via HTTP requests. These operations include creating new resources, reading existing ones, updating resource data, and deleting resources. It adheres to the principles of REST, ensuring a predictable and uniform interface for communication between clients and servers.</br>
@@ -43,24 +43,10 @@ Add additional dependencies:
         <!-- https://springdoc.org/ -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.openapi-ui}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
-            <version>${springdoc-openapi-starter-webflux-api}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc-openapi-starter-webmvc-ui}</version>
+            <version>3.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <version>${springdoc.openapi.starter.webmvc.api}</version>
-        </dependency>
+
 ````
 
 ### Required Model Library dependency
