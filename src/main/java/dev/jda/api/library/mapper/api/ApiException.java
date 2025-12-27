@@ -8,12 +8,11 @@ import java.io.Serializable;
 @Getter
 public class ApiException extends RuntimeException implements Serializable {
     private final HttpStatus httpStatus;
-    private final String detail;
+    private String detail;
 
-    public ApiException(String message, HttpStatus httpStatus, String detail) {
+    public ApiException(String message, HttpStatus httpStatus) {
         super(message);
         this.httpStatus = httpStatus;
-        this.detail = detail;
     }
 
     public ApiException(String message, String detail) {
