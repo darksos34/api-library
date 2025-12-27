@@ -1,5 +1,6 @@
-package dev.jda.api.library.config;
+package dev.jda.api.library.swagger;
 
+import dev.jda.api.library.mapper.api.ApiConfiguration;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.RequiredArgsConstructor;

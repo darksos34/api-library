@@ -1,4 +1,4 @@
-package dev.jda.api.library.controller;
+package dev.jda.api.library.swagger;
 
 
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package dev.jda.api.library.config;
+package dev.jda.api.library.mapper.api;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
