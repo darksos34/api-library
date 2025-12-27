@@ -1,6 +1,6 @@
 package dev.jda.api.library.service;
 
-import dev.jda.api.library.config.ModelMapperConfiguration;
+import dev.jda.api.library.mapper.mapper.ModelMapperConfiguration;
 import dev.jda.api.library.entity.User;
 import dev.jda.api.library.exception.GlobalExceptionHandler;
 import dev.jda.api.library.repository.UserRepository;

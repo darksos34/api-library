@@ -1,6 +1,7 @@
 package dev.jda.api.library.mapper;
 
 import dev.jda.api.library.entity.User;
+import dev.jda.api.library.mapper.mapper.UserMapper;
 import dev.jda.model.library.dto.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Component;

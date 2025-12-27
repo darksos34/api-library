@@ -1,4 +1,4 @@
-package dev.jda.api.library.mapper;
+package dev.jda.api.library.mapper.mapper;
 
 import dev.jda.api.library.entity.Profile;
 import dev.jda.model.library.dto.ProfileDTO;

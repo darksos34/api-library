@@ -1,5 +1,6 @@
-package dev.jda.api.library.mapper;
+package dev.jda.api.library.mapper.mapper.base;
 
+import dev.jda.api.library.mapper.api.ApiException;
 import org.modelmapper.Converter;
 import org.springframework.http.HttpStatus;
 

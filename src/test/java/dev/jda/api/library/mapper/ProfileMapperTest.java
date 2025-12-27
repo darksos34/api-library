@@ -1,6 +1,7 @@
 package dev.jda.api.library.mapper;
 
 import dev.jda.api.library.entity.Profile;
+import dev.jda.api.library.mapper.mapper.ProfileMapper;
 import dev.jda.model.library.dto.ProfileDTO;
 import org.junit.jupiter.api.Test;
 

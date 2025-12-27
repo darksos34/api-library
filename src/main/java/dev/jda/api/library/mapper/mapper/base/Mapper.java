@@ -1,4 +1,4 @@
-package dev.jda.api.library.mapper;
+package dev.jda.api.library.mapper.mapper.base;
 
 import org.modelmapper.ModelMapper;
 
