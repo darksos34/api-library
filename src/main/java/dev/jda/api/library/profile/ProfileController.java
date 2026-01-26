@@ -1,0 +1,43 @@
+package dev.jda.api.library.profile;
+
+import dev.jda.model.library.dto.ProfileDTO;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequiredArgsConstructor
+@RestController
+public class ProfileController implements ProfileApi {
+
+    private final ProfileService profileService;
+    private final ModelMapper modelMapper;
+    private final ProfileRepresentationAssembler profileRepresentationAssembler;
+
+    @Override
+    public ProfileDTO getProfileByUuid(String uuid) {
+        return profileRepresentationAssembler.toModel(profileService.getProfileByUuid(uuid));
+    }
+
+    @Override
+    public ProfileDTO createProfile(ProfileDTO profileDTO) {
+        Profile profile = modelMapper.map(profileDTO, Profile.class);
+        return profileRepresentationAssembler.toModel(profileService.createProfile(profile));
+    }
+
+    @Override
+    public ProfileDTO putProfileByUuid(String uuid, ProfileDTO profileDTO) {
+        Profile profile = modelMapper.map(profileDTO, Profile.class);
+        return profileRepresentationAssembler.toModel(profileService.putProfileByUuid(uuid, profile));
+    }
+
+    @Override
+    public ProfileDTO patchProfileByUuid(String uuid, ProfileDTO profileDTO) {
+        Profile profile = modelMapper.map(profileDTO, Profile.class);
+        return profileRepresentationAssembler.toModel(profileService.patchProfileByUuid(uuid, profile));
+    }
+
+    @Override
+    public void deleteProfileByUuid(String uuid) {
+        profileService.deleteProfileByUuid(uuid);
+    }
+}
