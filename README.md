@@ -4,7 +4,7 @@
 
 <b>Author:</b> <a href="https://github.com/darksos34" target="_blank">Jordy Hamwijk</a><br>
 <b>Created:</b> 2025-04-05<br>
-<b>Last updated:</b> 2025-12-25<br>
+<b>Last updated:</b> 2026-02-03<br>
 
 [![](https://img.shields.io/badge/Spring%20Boot-8A2BE2)]() [![](https://img.shields.io/badge/release-Dec%2018,%202025-blue)]() [![](https://img.shields.io/badge/version-4.0.1-blue)]()
 
