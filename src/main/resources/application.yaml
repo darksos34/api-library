@@ -19,3 +19,9 @@ spring:
     error:
       include-message: always
       path: ${SPRING_WEB_ERROR_PATH}
+  liquibase:
+    enabled: true
+    contexts: development
+    drop-first: false
+    clear-checksums: true
+    change-log: classpath:db/db.changelog-master.xml

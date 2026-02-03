@@ -25,7 +25,7 @@ public interface ProfileApi {
      * @param uuid of the profile to be displayed.
      * @return ProfileDTO with the values of the profile.
      */
-    @GetMapping("/{uuid}")
+    @GetMapping(path = "/{uuid}")
     @Operation(summary = "Profile weergeven op basis van uuid.")
     ProfileDTO getProfileByUuid(@PathVariable(value = "uuid")
                                 @Parameter(example = "bc249d76-617a-4dfa-be47e7effeab8", description = "Filter PROFILE uuid") String uuid);

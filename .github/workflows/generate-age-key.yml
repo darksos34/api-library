@@ -1,0 +1,18 @@
+name: Generate age keypair
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install age
+        run: sudo apt-get install -y age
+
+      - name: Generate keypair
+        run: |
+          age-keygen -o age-key.txt
+          echo "PRIVATE_KEY<<EOF" >> $GITHUB_STEP_SUMMARY
+          cat age-key.txt >> $GITHUB_STEP_SUMMARY
+          echo "EOF" >> $GITHUB_STEP_SUMMARY
