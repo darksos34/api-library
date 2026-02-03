@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install age
-        run: sudo apt-get install -y age
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y age
 
       - name: Generate keypair
         run: |
