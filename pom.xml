@@ -114,7 +114,11 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-
+        <!-- Liquibase is a tool for managing and executing database changes.        -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
