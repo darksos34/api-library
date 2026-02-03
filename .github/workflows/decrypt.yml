@@ -2,7 +2,8 @@ name: Decrypt Secrets
 
 on:
   workflow_dispatch:
-
+permissions:
+  contents: write
 jobs:
   decrypt:
     runs-on: ubuntu-latest
