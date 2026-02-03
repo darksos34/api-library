@@ -1,10 +1,10 @@
-name: Encrypt Secrets
+name: Decrypt Secrets
 
 on:
   workflow_dispatch:
 
 jobs:
-  encrypt:
+  decrypt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,12 +20,15 @@ jobs:
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install age sops
 
-      - name: Encrypt secrets
+      - name: Load private key
+        run: |
+          echo "${{ secrets.SOPS_AGE_KEY }}" > age-key.txt
+          export SOPS_AGE_KEY_FILE=age-key.txt
+
+      - name: Decrypt secrets
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          sops --encrypt --in-place secrets/app-secrets.yaml
+          sops -d secrets/app-secrets.yaml > decrypted.yaml
 
-      - name: Commit encrypted secrets
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Encrypt secrets"
+      - name: Show decrypted file
+        run: cat decrypted.yaml
