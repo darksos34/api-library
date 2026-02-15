@@ -124,6 +124,9 @@ public interface UserApi {
 }
 ```
 
+
+### Sealed secrets with github actions
+
 ## Let's Stay Connected
 
 Feedback is always welcome. If you have any questions, comments, or suggestions, please do not hesitate to reach out.
