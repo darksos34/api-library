@@ -37,3 +37,9 @@ mvnw
 /.mvn
 /.mvn/wrapper
 .mvn
+
+
+### Secrets ###
+*.env
+*.properties
+app-secrets.yaml
