@@ -25,3 +25,4 @@ spring:
     drop-first: false
     clear-checksums: true
     change-log: classpath:db/db.changelog-master.xml
+
