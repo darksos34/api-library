@@ -11,6 +11,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class UserRepresentationAssembler implements RepresentationModelAssembler
     @Override
     public @NonNull UserDTO toModel(@NonNull User entity) {
         UserDTO userDTO = userMapper.toDto(entity);
-        addSelfLink(userDTO);
-        userDTO.setProfiles(getProfilesAsModel(entity));
+        addSelfLink(userDTO, entity.getUuid());
+        setField(userDTO, "profiles", getProfilesAsModel(entity));
         return userDTO;
     }
 
@@ -39,8 +40,30 @@ public class UserRepresentationAssembler implements RepresentationModelAssembler
                 .toList();
     }
 
-    private void addSelfLink(UserDTO userDTO) {
-        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByUuid(userDTO.getUuid())).withSelfRel();
+    private void addSelfLink(UserDTO userDTO, String uuid) {
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUserByUuid(uuid)).withSelfRel();
         userDTO.add(selfLink);
+    }
+
+    private static void setField(Object target, String fieldName, Object value) {
+        Field field = findField(target.getClass(), fieldName);
+        try {
+            field.setAccessible(true);
+            field.set(target, value);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalStateException("Unable to set field '" + fieldName + "'", ex);
+        }
+    }
+
+    private static Field findField(Class<?> type, String fieldName) {
+        Class<?> current = type;
+        while (current != null) {
+            try {
+                return current.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException ignored) {
+                current = current.getSuperclass();
+            }
+        }
+        throw new IllegalStateException("Field '" + fieldName + "' not found on " + type.getName());
     }
 }

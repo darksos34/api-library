@@ -24,12 +24,12 @@ public class ProfileRepresentationAssembler implements RepresentationModelAssemb
     @Override
     public ProfileDTO toModel(Profile profile) {
         ProfileDTO profileDTO = profileMapper.toDto(profile);
-        addSelfLink(profileDTO);
+        addSelfLink(profileDTO, profile.getUuid());
         return profileDTO;
     }
 
-    private void addSelfLink(ProfileDTO profileDTO) {
-        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(ProfileController.class).getProfileByUuid(profileDTO.getUuid())).withSelfRel();
+    private void addSelfLink(ProfileDTO profileDTO, String uuid) {
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(ProfileController.class).getProfileByUuid(uuid)).withSelfRel();
         profileDTO.add(selfLink);
     }
 }
