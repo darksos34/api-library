@@ -13,8 +13,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-      GITHUB_ACTOR: ${{ github.actor }}
-      GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+      GH_PACKAGES_USER: darksos34
+      GH_PACKAGES_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -26,8 +26,8 @@ jobs:
           distribution: temurin
           java-version: 25
           server-id: github
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
+          server-username: GH_PACKAGES_USER
+          server-password: GH_PACKAGES_TOKEN
 
 
       - name: Build application
