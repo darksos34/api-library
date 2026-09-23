@@ -22,6 +22,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 25
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+
 
       - name: Build application
         run: mvn clean package -DskipTests
