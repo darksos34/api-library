@@ -1,36 +1,41 @@
-name: Encrypt Secrets
+name: Build and Publish Docker Image
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
-  contents: write
+  contents: read
+  packages: write
 
 jobs:
-  encrypt:
+  docker:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Install Homebrew
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.profile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-      - name: Install age and sops
-        run: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          brew install age sops
-
-      - name: Encrypt secrets
-        run: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          sops --encrypt --in-place secrets/app-secrets.yaml
-
-      - name: Commit encrypted secrets
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          commit_message: "Encrypt secrets"
-          branch: ${{ github.ref_name }}
-          skip_dirty_check: true
+          distribution: temurin
+          java-version: 21
+
+      - name: Build application
+        run: mvn clean package -DskipTests
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/JOUW_GITHUB_NAAM/JOUW_REPO:latest
