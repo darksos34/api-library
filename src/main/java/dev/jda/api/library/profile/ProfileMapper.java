@@ -1,22 +1,27 @@
 package dev.jda.api.library.profile;
 
 import dev.jda.model.library.dto.ProfileDTO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface ProfileMapper {
+@Component
+public class ProfileMapper {
 
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "uuid", target = "uuid")
-    @Mapping(source = "code", target = "code")
-    @Mapping(source = "name", target = "name")
-    ProfileDTO toDto(Profile profile);
+    public ProfileDTO toDto(Profile profile) {
+        if (profile == null) {
+            return null;
+        }
+        ProfileDTO dto = new ProfileDTO();
+        BeanUtils.copyProperties(profile, dto, "users", "user");
+        return dto;
+    }
 
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "uuid", target = "uuid")
-    @Mapping(source = "code", target = "code")
-    @Mapping(source = "name", target = "name")
-    Profile toEntity(ProfileDTO dto);
+    public Profile toEntity(ProfileDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        Profile profile = new Profile();
+        BeanUtils.copyProperties(dto, profile, "users", "user");
+        return profile;
+    }
 }
