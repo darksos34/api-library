@@ -15,7 +15,7 @@
     <description>api-library</description>
     <properties>
         <java.version>25</java.version>
-        <model.library.version>0.0.7</model.library.version>
+        <model.library.version>0.0.8</model.library.version>
         <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
 
