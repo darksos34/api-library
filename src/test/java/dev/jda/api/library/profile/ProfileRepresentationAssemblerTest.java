@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
@@ -21,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 class ProfileRepresentationAssemblerTest {
 
     @Mock
-    private ModelMapper modelMapper;
+    private ProfileMapper profileMapper;
 
     @InjectMocks
     private ProfileRepresentationAssembler unitToTest;
@@ -37,17 +36,17 @@ class ProfileRepresentationAssemblerTest {
 
     @Test
     void toModelReturnsProfileDtoWithSelfLink() {
-        when(modelMapper.map(profile, ProfileDTO.class)).thenReturn(profileDTO);
+        when(profileMapper.toDto(profile)).thenReturn(profileDTO);
 
         ProfileDTO result = unitToTest.toModel(profile);
 
-        verify(modelMapper).map(profile, ProfileDTO.class);
+        verify(profileMapper).toDto(profile);
         assertEquals(profileDTO, result);
     }
 
     @Test
     void toModelAddsSelfLinkToProfileDto() {
-        when(modelMapper.map(profile, ProfileDTO.class)).thenReturn(profileDTO);
+        when(profileMapper.toDto(profile)).thenReturn(profileDTO);
 
         ProfileDTO result = unitToTest.toModel(profile);
 

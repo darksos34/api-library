@@ -55,14 +55,14 @@ Add additional dependencies:
 To run your Application you will need to import this project with Maven.
 
 
-### ModelMapper: A library that simplifies object mapping. 
+### MapStruct: A library that simplifies object mapping.
 
 ```` xml
-        <!--    https://modelmapper.org/getting-started/    -->
+        <!-- https://mapstruct.org/documentation/stable/reference/html/ -->
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 ````
 

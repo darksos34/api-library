@@ -10,14 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.when;
 class UserRepresentationAssemblerTest {
 
     @Mock
-    private ModelMapper modelMapper;
+    private UserMapper userMapper;
 
     @Mock
     private ProfileRepresentationAssembler profileReprestoModel;
@@ -54,12 +52,12 @@ class UserRepresentationAssemblerTest {
         createUser.setProfiles(Collections.singletonList(new Profile()));
 
         userDTO.setCode("1234");
-        when(modelMapper.map(any(User.class), eq(UserDTO.class))).thenReturn(userDTO);
+        when(userMapper.toDto(any(User.class))).thenReturn(userDTO);
         when(profileReprestoModel.toModel(any(Profile.class))).thenReturn(profileDTO);
 
         UserDTO result = unitToTest.toModel(createUser);
 
-        verify(modelMapper).map(createUser, UserDTO.class);
+        verify(userMapper).toDto(createUser);
         verify(profileReprestoModel).toModel(any(Profile.class));
         assertEquals("1234", result.getCode());
         assertNotNull(result.getProfiles());
@@ -69,11 +67,11 @@ class UserRepresentationAssemblerTest {
 
     @Test
     void toModelReturnsUserDtoWithSelfLink() {
-        when(modelMapper.map(any(User.class), eq(UserDTO.class))).thenReturn(new UserDTO());
+        when(userMapper.toDto(any(User.class))).thenReturn(new UserDTO());
 
         UserDTO result = unitToTest.toModel(user);
 
-        verify(modelMapper).map(user, UserDTO.class);
+        verify(userMapper).toDto(user);
         assertNotNull(result);
     }
 

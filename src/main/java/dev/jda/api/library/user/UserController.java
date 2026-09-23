@@ -3,7 +3,6 @@ package dev.jda.api.library.user;
 import dev.jda.api.library.common.exception.GlobalExceptionHandler.CodeExistsExceptionHandler;
 import dev.jda.model.library.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController implements UserApi {
 
     private final UserService userService;
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
     private final UserRepresentationAssembler userRepresentationAssembler;
     private final PagedResourcesAssembler<User> pagedResourcesAssembler;
 
@@ -41,13 +40,13 @@ public class UserController implements UserApi {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws CodeExistsExceptionHandler {
-        User user = modelMapper.map(userDTO, User.class);
+        User user = userMapper.toEntity(userDTO);
         return userRepresentationAssembler.toModel(userService.createUser(user));
     }
 
     @Override
     public UserDTO patchUserByUuid(String uuid, UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
+        User user = userMapper.toEntity(userDTO);
         return userRepresentationAssembler.toModel(userService.patchUserByUuid(uuid, user));
     }
 
@@ -56,6 +55,5 @@ public class UserController implements UserApi {
         userService.deleteUserByUuid(uuid);
     }
 }
-
 
 

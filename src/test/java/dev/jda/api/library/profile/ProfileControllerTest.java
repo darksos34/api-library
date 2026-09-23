@@ -1,6 +1,5 @@
 package dev.jda.api.library.profile;
 
-import dev.jda.api.library.common.mapper.ModelMapperConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import({ProfileService.class, ProfileController.class, ProfileRepresentationAssembler.class, ModelMapperConfiguration.class
-})
+@Import({ProfileService.class, ProfileController.class, ProfileRepresentationAssembler.class})
 @WebMvcTest(controllers = ProfileController.class,
         properties = {
                 "springdoc.api-docs.enabled=false",
@@ -31,6 +29,9 @@ class ProfileControllerTest {
 
     @MockitoBean
     private ProfileService unitToTest;
+
+    @MockitoBean
+    private ProfileMapper profileMapper;
 
     @Autowired
     private MockMvc mockMvc;

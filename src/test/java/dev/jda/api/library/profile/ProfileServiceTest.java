@@ -1,6 +1,5 @@
 package dev.jda.api.library.profile;
 
-import dev.jda.api.library.common.mapper.ModelMapperConfiguration;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 
@@ -21,7 +19,6 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-@Import({ModelMapperConfiguration.class})
 class ProfileServiceTest {
 
     private static final String PROFILE_UUID =  "1234" ;

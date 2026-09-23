@@ -3,10 +3,9 @@ package dev.jda.api.library.user;
 import dev.jda.api.library.profile.ProfileRepresentationAssembler;
 import dev.jda.model.library.dto.ProfileDTO;
 import dev.jda.model.library.dto.UserDTO;
-import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
-
-import org.modelmapper.ModelMapper;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -19,15 +18,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 @RequiredArgsConstructor
-@Nullable
+@NullMarked
 public class UserRepresentationAssembler implements RepresentationModelAssembler<User, UserDTO> {
 
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
     private final ProfileRepresentationAssembler profileReprestoModel;
 
     @Override
-    public UserDTO toModel(User entity) {
-        UserDTO userDTO = modelMapper.map(entity, UserDTO.class);
+    public @NonNull UserDTO toModel(@NonNull User entity) {
+        UserDTO userDTO = userMapper.toDto(entity);
         addSelfLink(userDTO);
         userDTO.setProfiles(getProfilesAsModel(entity));
         return userDTO;

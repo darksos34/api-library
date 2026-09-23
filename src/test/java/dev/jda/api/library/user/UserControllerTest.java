@@ -1,6 +1,6 @@
 package dev.jda.api.library.user;
 
-import dev.jda.api.library.common.mapper.ModelMapperConfiguration;
+import dev.jda.api.library.profile.ProfileMapper;
 import dev.jda.api.library.profile.ProfileRepresentationAssembler;
 import dev.jda.model.library.dto.UserDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -38,12 +37,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "springdoc.swagger-ui.enabled=false"
 })
 @Import({
-        UserService.class, ModelMapperConfiguration.class, UserRepresentationAssembler.class, ProfileRepresentationAssembler.class
+        UserService.class, UserRepresentationAssembler.class, ProfileRepresentationAssembler.class
 })
 class UserControllerTest {
 
     @MockitoBean
-    private ModelMapper modelMapper;
+    private UserMapper userMapper;
+
+    @MockitoBean
+    private ProfileMapper profileMapper;
 
     @Getter
     @Setter
@@ -80,7 +82,7 @@ class UserControllerTest {
     void shouldReturn404WhenNonExistingUuidIsProvided() throws Exception {
         User user = new User();
 
-        when(modelMapper.map(any(UserDTO.class), any())).thenReturn(user);
+        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(user);
         when(userService.patchUserByUuid(anyString(), any(User.class))).thenReturn(null);
 
         mockMvc.perform(patch("/user/{uuid}", "non-existing-uuid")

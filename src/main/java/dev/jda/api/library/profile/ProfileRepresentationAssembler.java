@@ -1,10 +1,8 @@
 package dev.jda.api.library.profile;
 
 import dev.jda.model.library.dto.ProfileDTO;
-import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
-
-import org.modelmapper.ModelMapper;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -14,10 +12,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 @RequiredArgsConstructor
-@Nullable
+@NullMarked
 public class ProfileRepresentationAssembler implements RepresentationModelAssembler<Profile, ProfileDTO> {
 
-    private final ModelMapper modelMapper;
+    private final ProfileMapper profileMapper;
 
     /**
      * @param profile the profile to convert
@@ -25,7 +23,7 @@ public class ProfileRepresentationAssembler implements RepresentationModelAssemb
      */
     @Override
     public ProfileDTO toModel(Profile profile) {
-        ProfileDTO profileDTO = modelMapper.map(profile, ProfileDTO.class);
+        ProfileDTO profileDTO = profileMapper.toDto(profile);
         addSelfLink(profileDTO);
         return profileDTO;
     }
