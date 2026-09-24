@@ -8,7 +8,7 @@ server:
 
 spring:
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE}
+    active: ik
   application:
     name: ${SPRING_APPLICATION_NAME}
   config:
@@ -25,3 +25,8 @@ spring:
     drop-first: false
     clear-checksums: true
     change-log: classpath:db/db.changelog-master.xml
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
