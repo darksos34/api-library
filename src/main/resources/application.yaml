@@ -8,7 +8,7 @@ server:
 
 spring:
   profiles:
-    active: ik
+    active: dev
   application:
     name: ${SPRING_APPLICATION_NAME}
   config:
@@ -18,13 +18,7 @@ spring:
   web:
     error:
       include-message: always
-      path: ${SPRING_WEB_ERROR_PATH}
-  liquibase:
-    enabled: true
-    contexts: development
-    drop-first: false
-    clear-checksums: true
-    change-log: classpath:db/db.changelog-master.xml
+      path: ${SPRING_WEB_ERROR_PATH}e
 springdoc:
   api-docs:
     enabled: true
